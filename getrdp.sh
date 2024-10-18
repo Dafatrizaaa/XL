@@ -3,12 +3,12 @@
 #CREATE BY KANGQULL
 #
 echo "#################################################"
-echo "List Pasword Windows                            #"
-echo "--------------------------------------          #"
-echo "|*Windows 2022 : comingsoon          |          #"
-echo "|*Windows 2019 : comingsoon          |          #"
-echo "|*Windows 2016 : comingsoon          |          #"
-echo "|*Windows 2012 : comingsoon          |          #"
+echo "List Pasword Windows>>>>>>>>>>>>>>>>>>>>>>>↓↓   #"
+echo "--------------------------------------     ↓↓   #"
+echo "|*Windows 2022 : comingsoon          |     ↓↓   #"
+echo "|*Windows 2019 : comingsoon          |     ↓↓   #"
+echo "|*Windows 2016 : comingsoon          |     ↓↓   #"
+echo "|*Windows 2012 : comingsoon          | ⟨⟨⟨««««   #"
 echo "|*Windows 10   : windowsme           |          #"
 echo "|*Windows 11 xLite M : windowsme     |          #"
 echo "--------------------------------------          #"
