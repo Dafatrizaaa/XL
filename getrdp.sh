@@ -22,6 +22,7 @@ echo "|4) Windows 10 Pro (tersedia)           |"
 echo "|5) Windows 11 x Lite Micro (tersedia)  |"
 echo "#########################################"
 
+ALAMAT=https://onboardcloud.dl.sourceforge.net/project/vlitee
 read -p "Pilih [1]: " GETOS
 
 case "$GETOS" in
@@ -31,9 +32,9 @@ case "$GETOS" in
         ;;
 	3) GETOS="soon"
         ;;
-	4) GETOS="https://onboardcloud.dl.sourceforge.net/project/vlitee/windows10lite.gz"
+	4) GETOS="$ALAMAT/windows10lite.gz"
         ;;
-	5) GETOS="https://onboardcloud.dl.sourceforge.net/project/vlitee/win11xLiteMicro.gz"
+	5) GETOS="$ALAMAT/win11xLiteMicro.gz"
         ;;
 	*) echo "pilihan salah"; exit;;
 esac
