@@ -2,10 +2,12 @@
 #
 #CREATE BY KANGQULL
 #
+echo "#########################################
 echo "List Pasword Windows"
-echo "-----------------------------"
+echo "---------------------------------"
 echo "*Windows 10 password : windowsme"
-echo "-----------------------------"
+echo "*Windows 11 xLite M : windowsme
+echo "---------------------------------"
 echo "!WINDOWS CUMA BISA DI VPS UBUNTU DAN DEBIAN!"
 echo "Install Windows yang tersedia dibawah ini:"
 echo "#########################################"
