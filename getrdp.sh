@@ -8,7 +8,7 @@ echo "#--------------------------------------     ↓↓   #"
 echo "#|*Windows 2022 : comingsoon          |     ↓↓   #"
 echo "#|*Windows 2019 : comingsoon          |     ↓↓   #"
 echo "#|*Windows 2016 : comingsoon          |     ↓↓   #"
-echo "#|*Windows 2012 : comingsoon          | ⟨⟨⟨««««   #"
+echo "#|*Windows 2012 : comingsoon          |⟨⟨⟨««««   #"
 echo "#|*Windows 10   : windowsme           |          #"
 echo "#|*Windows 11 xLite M : windowsme     |          #"
 echo "#--------------------------------------          #"
@@ -25,7 +25,7 @@ echo "##################################################"
 
 ALAMAT=https://bit.ly
 
-read -p "Pilih [1]: " GETOS
+read -p "Pilih Windows sesuai nomor: " GETOS
 
 case "$GETOS" in
 	1|"") GETOS="soon"
