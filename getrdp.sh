@@ -16,20 +16,22 @@ read -p "Pilih [1]: " GETOS
 
 case "$GETOS" in
 	1|"") GETOS="soon"
-     ;;
+        ;;
 	2) GETOS="soon"
-     ;;
+        ;;
 	3) GETOS="soon"
-     ;;
+        ;;
 	4) GETOS="https://onboardcloud.dl.sourceforge.net/project/vlitee/windows10lite.gz"
-     ;;
+        ;;
 	5) GETOS="soon"
-     ;;
+        ;;
 	*) echo "pilihan salah"; exit;;
 esac
 
 wget --no-check-certificate -O- $GETOS | gunzip | dd of=/dev/vda bs=3M status=progress
 
-echo 'Trimakasih telah menggunakan script by KangQull - Support di https://github.com/KangQull-- Server kamu akan off dalam waktu 15 detik....'
+echo 'Trimakasih telah menggunakan script by KangQull -'
+echo 'Support di https://github.com/KangQull -'
+echo 'Server kamu akan off dalam waktu 15 detik....'
 sleep 15
 poweroff
