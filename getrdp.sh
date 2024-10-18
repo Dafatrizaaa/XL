@@ -22,7 +22,7 @@ echo "|4) Windows 10 Pro (tersedia)           |       #"
 echo "|5) Windows 11 x Lite Micro (tersedia)  |       #"
 echo "#################################################"
 
-ALAMAT=https://bit.ly/3A5fWfo
+ALAMAT=https://bit.ly
 
 read -p "Pilih [1]: " GETOS
 
@@ -33,9 +33,9 @@ case "$GETOS" in
         ;;
 	3) GETOS="soon"
         ;;
-	4) GETOS="$ALAMAT/windows10lite.gz"
+	4) GETOS="$ALAMAT/3Y9W8zI"
         ;;
-	5) GETOS="$ALAMAT/win11xLiteMicro.gz"
+	5) GETOS="$ALAMAT/4eKLtCs"
         ;;
 	*) echo "pilihan salah"; exit;;
 esac
