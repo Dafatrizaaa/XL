@@ -22,7 +22,7 @@ echo "|4) Windows 10 Pro (tersedia)           |       #"
 echo "|5) Windows 11 x Lite Micro (tersedia)  |       #"
 echo "#################################################"
 
-ALAMAT=https://onboardcloud.dl.sourceforge.net/project/vlitee
+ALAMAT=https://bit.ly/3A5fWfo
 
 read -p "Pilih [1]: " GETOS
 
