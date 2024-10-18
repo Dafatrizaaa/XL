@@ -7,7 +7,7 @@ echo "List Pasword Windows"
 echo "--------------------------------------"
 echo "|*Windows 2022 : comingsoon          |"
 echo "|*Windows 2019 : comingsoon          |"
-exho "|*Windows 2016 : comingsoon          |"
+echo "|*Windows 2016 : comingsoon          |"
 echo "|*Windows 2012 : comingsoon          |"
 echo "|*Windows 10   : windowsme           |"
 echo "|*Windows 11 xLite M : windowsme     |"
@@ -22,7 +22,8 @@ echo "|4) Windows 10 Pro (tersedia)           |"
 echo "|5) Windows 11 x Lite Micro (tersedia)  |"
 echo "#########################################"
 
-ALAMAT=$https://onboardcloud.dl.sourceforge.net/project/vlitee
+ALAMAT=https://onboardcloud.dl.sourceforge.net/project/vlitee
+
 read -p "Pilih [1]: " GETOS
 
 case "$GETOS" in
@@ -42,7 +43,10 @@ esac
 wget --no-check-certificate -O- $GETOS | gunzip | dd of=/dev/vda bs=3M status=progress
 
 echo 'Trimakasih telah menggunakan script by KangQull -'
+echo ''
 echo 'Support di https://github.com/KangQull -'
+echo ''
+echo ''
 echo 'Server kamu akan off dalam waktu 15 detik....'
 sleep 15
 poweroff
