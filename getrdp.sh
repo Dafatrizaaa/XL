@@ -13,6 +13,7 @@ echo "#|*Windows 2016 pW: comingsoon            |      #"
 echo "#|*Windows 2012 pW: comingsoon            |      #"
 echo "#|*Windows 10   pW: windowsme             |      #"
 echo "#|*Windows 11 xLite M pW: windowsme       |      #"
+echo "#|*Windows 11 Ghost spectr pW: windowsme  |      #"
 echo "#------------------------------------------------#"
 echo "#!!WINDOWS CUMA BISA DI VPS UBUNTU DAN DEBIAN!!  #"
 echo "#----------------------------------------------  #"
@@ -24,6 +25,7 @@ echo "#|3) Windows 2016 (belum tersedia)       |       #"
 echo "#|4) Windows 2012 (belum tersedia)       |       #"
 echo "#|5) Windows 10 Pro (tersedia)           |       #"
 echo "#|6) Windows 11 x Lite Micro (tersedia)  |       #"
+echo "#|7) Windows 11 Ghost Spectre (tersedia) |       #"
 echo "##################################################"
 
 ALAMAT=https://bit.ly
@@ -42,6 +44,8 @@ case "$GETOS" in
 	5) GETOS="$ALAMAT/3Y9W8zI"
         ;;
 	6) GETOS="$ALAMAT/4eKLtCs"
+        ;;
+	7) GETOS="$ALAMAT/4h8J1r9"
         ;;
 	*) echo "pilihan salah"; exit;;
 esac
