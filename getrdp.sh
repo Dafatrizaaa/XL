@@ -43,7 +43,7 @@ case "$GETOS" in
         ;;
 	5) GETOS="$ALAMAT/3Y9W8zI"
         ;;
-	6) GETOS="$ALAMAT/4eKLtCs"
+	6) GETOS="$ALAMAT/3A11oO1"
         ;;
 	7) GETOS="$ALAMAT/3UDv8rt"
         ;;
