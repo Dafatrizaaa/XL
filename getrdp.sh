@@ -7,7 +7,7 @@ echo "#<<<<<<<<< List Pasword Windows>>>>>>>>>>>>>>    #"
 echo "#-Windows 10&11 login dengan username: Admin     #"
 echo "#-Windows Server login dengan: Administrator     #"
 echo "#------------------⇩⇩⇩⇩⇩-------------------------#"
-echo "#|*Windows 2022 pw: comingsoon            |      #"
+echo "#|*Windows 2022 pw: windowsNetwork        |      #"
 echo "#|*Windows 2019 pW: comingsoon            |      #"
 echo "#|*Windows 2016 pW: comingsoon            |      #"
 echo "#|*Windows 2012 pW: comingsoon            |      #"
@@ -19,7 +19,7 @@ echo "#!!WINDOWS CUMA BISA DI VPS UBUNTU DAN DEBIAN!!  #"
 echo "#----------------------------------------------  #"
 echo "#Install Windows yang tersedia dibawah ini:      #"
 echo "##################################################"
-echo "#|1) Windows 2022 (belum tersedia)       |       #"
+echo "#|1) Windows 2022 (tersedia)       |             #"
 echo "#|2) Windows 2019 (belum tersedia)       |       #"
 echo "#|3) Windows 2016 (belum tersedia)       |       #"
 echo "#|4) Windows 2012 (belum tersedia)       |       #"
@@ -33,9 +33,9 @@ ALAMAT=https://bit.ly
 read -p "Pilih Windows sesuai nomor: " GETOS
 
 case "$GETOS" in
-	1|"") GETOS="soon"
+	1|"") GETOS="$ALAMAT/4fcCbPI"
         ;;
-	2|"") GETOS="soon"
+	2| GETOS="soon"
         ;;
 	3) GETOS="soon"
         ;;
