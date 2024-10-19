@@ -35,7 +35,7 @@ read -p "Pilih Windows sesuai nomor: " GETOS
 case "$GETOS" in
 	1|"") GETOS="$ALAMAT/4fcCbPI"
         ;;
-	2| GETOS="soon"
+	2) GETOS="soon"
         ;;
 	3) GETOS="soon"
         ;;
