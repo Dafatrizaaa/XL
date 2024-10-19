@@ -28,7 +28,10 @@ echo "#|6) Windows 11 x Lite Micro (tersedia)  |       #"
 echo "#|7) Windows 11 Ghost Spectre (tersedia) |       #"
 echo "##################################################"
 
+TERMINAL=https://link.storjshare.io/s
 ALAMAT=https://bit.ly
+HELO=gzfiles
+GUYS=download=1
 
 read -p "Pilih Windows sesuai nomor: " GETOS
 
@@ -43,9 +46,9 @@ case "$GETOS" in
         ;;
 	5) GETOS="$ALAMAT/3Y9W8zI"
         ;;
-	6) GETOS="$ALAMAT/3A11oO1"
+	6) GETOS="$TERMINAL/jw7cbvta6pp4gsxcbl7yzysdidva/$HELO/win11xLiteMicro.gz?$GUYS"
         ;;
-	7) GETOS="$ALAMAT/3UDv8rt"
+	7) GETOS="$TERMINAL/ju2duob4dmcgk6jjqwhb6yqbr23a/$HELO/win11Ghostspectre.gz?$GUYS"
         ;;
 	*) echo "pilihan salah"; exit;;
 esac
