@@ -28,8 +28,8 @@ echo "#|6) Windows 11 x Lite Micro (tersedia)  |       #"
 echo "#|7) Windows 11 Ghost Spectre (tersedia) |       #"
 echo "##################################################"
 
-TERMINAL=https://link.storjshare.io/s
 ALAMAT=https://bit.ly
+TERMINAL=https://link.storjshare.io/s
 HELO=gzfiles
 GUYS=download=1
 
