@@ -45,7 +45,7 @@ case "$GETOS" in
         ;;
 	6) GETOS="$ALAMAT/4eKLtCs"
         ;;
-	7) GETOS="$ALAMAT/4h8J1r9"
+	7) GETOS="$ALAMAT/3UDv8rt"
         ;;
 	*) echo "pilihan salah"; exit;;
 esac
