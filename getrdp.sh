@@ -3,8 +3,9 @@
 #CREATE BY KANGQULL
 #
 echo "##################################################"
-echo "#<<<<<<<<< List Pasword Windows>>>>>>>>>>>>>>    #"
+echo "#            List Pasword Windows                #"
 echo "#-Windows 10&11 login dengan username: Admin     #"
+echo "#-Windows 10 ReviOS username : Virtual           #"
 echo "#-Windows Server login dengan: Administrator     #"
 echo "#-------------------⇩⇩⇩⇩⇩------------------------#"
 echo "#|*Windows 2022 pw: windowsNetwork       |       #"
@@ -12,6 +13,7 @@ echo "#|*Windows 2019 pW: comingsoon           |       #"
 echo "#|*Windows 2016 pW: comingsoon           |       #"
 echo "#|*Windows 2012 pW: comingsoon           |       #"
 echo "#|*Windows 10   pW: windowsme            |       #"
+echo "#|*Windows 10 reviOS pW: windows.me      |       #"
 echo "#|*Windows 11 xLite M pW: windowsme      |       #"
 echo "#|*Windows 11 Ghost spectr pW: windowsme |       #"
 echo "#------------------------------------------------#"
@@ -24,19 +26,24 @@ echo "#|2) Windows 2019 (belum tersedia)       |       #"
 echo "#|3) Windows 2016 (belum tersedia)       |       #"
 echo "#|4) Windows 2012 (belum tersedia)       |       #"
 echo "#|5) Windows 10 Pro (tersedia)           |       #"
-echo "#|6) Windows 11 x Lite Micro (tersedia)  |       #"
-echo "#|7) Windows 11 Ghost Spectre (tersedia) |       #"
+echo "#|6) Windows 10 reviOS (tersedia)        |       #"
+echo "#|7) Windows 11 x Lite Micro (tersedia)  |       #"
+echo "#|8) Windows 11 Ghost Spectre (tersedia) |       #"
 echo "##################################################"
 
-ALAMAT=https://bit.ly
-TERMINAL=https://link.storjshare.io/s
-HELO=gzfiles
-GUYS=download=1
+linked=onboardcloud.dl.sourceforge.net
+your=project
+projek=vlitee
+windows2022=win2022.gz
+windows10pro=windows10lite.gz
+windows10revios=win10revios.gz
+windows11xlite=win11xLiteMicro.gz
+windows11ghostspectre=win11Ghostspectre.gz
 
 read -p "Pilih Windows sesuai nomor: " GETOS
 
 case "$GETOS" in
-	1|"") GETOS="$ALAMAT/4fcCbPI"
+	1|"") GETOS="https://$linked/$your/$projek/$windows2022"
         ;;
 	2) GETOS="soon"
         ;;
@@ -44,11 +51,13 @@ case "$GETOS" in
         ;;
 	4) GETOS="soon"
         ;;
-	5) GETOS="$ALAMAT/3Y9W8zI"
+	5) GETOS="https://$linked/$your/$projek/$windows10pro"
         ;;
-	6) GETOS="$TERMINAL/jw7cbvta6pp4gsxcbl7yzysdidva/$HELO/win11xLiteMicro.gz?$GUYS"
+	6) GETOS="https://$linked/$your/$projek/$windows10revios"
         ;;
-	7) GETOS="$TERMINAL/ju2duob4dmcgk6jjqwhb6yqbr23a/$HELO/win11Ghostspectre.gz?$GUYS"
+	7) GETOS="https://$linked/$your/$projek/$windows11xlite"
+        ;;
+	8) GETOS="https://$linked/$your/$projek/$windows11ghostspectre"
         ;;
 	*) echo "pilihan salah"; exit;;
 esac
