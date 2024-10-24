@@ -26,7 +26,7 @@ echo "#|2) Windows 2019 (belum tersedia)       |       #"
 echo "#|3) Windows 2016 (belum tersedia)       |       #"
 echo "#|4) Windows 2012 (belum tersedia)       |       #"
 echo "#|5) Windows 10 Pro (tersedia)           |       #"
-echo "#|6) Windows 10 reviOS (tersedia)        |       #"
+echo "#|6) Windows 10 XLite (tersedia)        |       #"
 echo "#|7) Windows 11 x Lite Micro (tersedia)  |       #"
 echo "#|8) Windows 11 Ghost Spectre (tersedia) |       #"
 echo "##################################################"
@@ -36,7 +36,7 @@ your=project
 projek=vlitee
 windows2022=win2022.gz
 windows10pro=windows10lite.gz
-windows10revios=win10revios.gz
+windows10xlite=win10XLite.gz
 windows11xlite=win11xLiteMicro.gz
 windows11ghostspectre=win11Ghostspectre.gz
 
@@ -53,7 +53,7 @@ case "$GETOS" in
         ;;
 	5) GETOS="https://$linked/$your/$projek/$windows10pro"
         ;;
-	6) GETOS="https://$linked/$your/$projek/$windows10revios"
+	6) GETOS="https://$linked/$your/$projek/$windows10xlite"
         ;;
 	7) GETOS="https://$linked/$your/$projek/$windows11xlite"
         ;;
