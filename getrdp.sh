@@ -31,14 +31,7 @@ echo "#|7) Windows 11 x Lite Micro (tersedia)  |       #"
 echo "#|8) Windows 11 Ghost Spectre (tersedia) |       #"
 echo "##################################################"
 
-linked=onboardcloud.dl.sourceforge.net
-your=project
-projek=vlitee
-windows2022=win2022.gz
-windows10pro=windows10lite.gz
-windows10xlite=win10XLite.gz
-windows11xlite=win11xLiteMicro.gz
-windows11ghostspectre=win11Ghostspectre.gz
+location=https://cdnwuzz.me/s/ZYCn5ryxwwnBcz6/download?files=
 
 read -p "Pilih Windows sesuai nomor: " GETOS
 
