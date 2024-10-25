@@ -31,13 +31,13 @@ echo "#|7) Windows 11 x Lite Micro (tersedia)  |       #"
 echo "#|8) Windows 11 Ghost Spectre (tersedia) |       #"
 echo "##################################################"
 
-location=https://cdnwuzz.me/s/ZYCn5ryxwwnBcz6/download?files=
+location=https://cdnwuzz.me/s/ZYCn5ryxwwnBcz6/download?path
 files=.gz
 
 read -p "Pilih Windows sesuai nomor: " GETOS
 
 case "$GETOS" in
-	1|"") GETOS="https://$linked/$your/$projek/$windows2022"
+	1|"") GETOS="$location=win2022$files"
         ;;
 	2) GETOS="soon"
         ;;
@@ -45,24 +45,23 @@ case "$GETOS" in
         ;;
 	4) GETOS="soon"
         ;;
-	5) GETOS="https://$linked/$your/$projek/$windows10pro"
+	5) GETOS="$location=windows10lite$files"
         ;;
-	6) GETOS="https://$linked/$your/$projek/$windows10xlite"
+	6) GETOS="$location=win10XLite$files"
         ;;
-	7) GETOS="https://$linked/$your/$projek/$windows11xlite"
+	7) GETOS="$location=win11xLiteMicro$files"
         ;;
-	8) GETOS="https://$linked/$your/$projek/$windows11ghostspectre"
+	8) GETOS="$location=win11Ghostspectre$files"
         ;;
 	*) echo "pilihan salah"; exit;;
 esac
 
 wget --no-check-certificate -O- $GETOS | gunzip | dd of=/dev/vda bs=3M status=progress
 
-echo 'Trimakasih telah menggunakan script by KangQull -'
+echo 'Trimakasih telah menggunakan script by KangQull'
+echo ''
 echo ''
 echo 'Support di https://github.com/KangQull -'
 echo ''
 echo ''
-echo 'Server kamu akan off dalam waktu 15 detik....'
-sleep 15
-poweroff
+echo 'Matikan VPS kembali ke mode Hardrive'
