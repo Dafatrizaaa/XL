@@ -32,6 +32,7 @@ echo "#|8) Windows 11 Ghost Spectre (tersedia) |       #"
 echo "##################################################"
 
 location=https://cdnwuzz.me/s/ZYCn5ryxwwnBcz6/download?files=
+files=.gz
 
 read -p "Pilih Windows sesuai nomor: " GETOS
 
