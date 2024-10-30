@@ -31,7 +31,7 @@ echo "#|7) Windows 11 x Lite Micro (tersedia)  |       #"
 echo "#|8) Windows 11 Ghost Spectre (tersedia) |       #"
 echo "##################################################"
 
-location=https://cdnwuzz.me/s/ZYCn5ryxwwnBcz6/download?path
+location=https://cloudshydro.tech/s/7f7JCBDBQzGffyq/download?path
 files=.gz
 
 read -p "Pilih Windows sesuai nomor: " GETOS
