@@ -27,8 +27,10 @@ echo "#|3) Windows 2016 (belum tersedia)       |       #"
 echo "#|4) Windows 2012 (belum tersedia)       |       #"
 echo "#|5) Windows 10 Pro (tersedia)           |       #"
 echo "#|6) Windows 10 XLite (tersedia)         |       #"
-echo "#|7) Windows 11 x Lite Micro (tersedia)  |       #"
-echo "#|8) Windows 11 Ghost Spectre (tersedia) |       #"
+echo "#|7) Windows 10 NeonLite (tersedia)      |       #"
+echo "#|8) Windows 11 x Lite Micro (tersedia)  |       #"
+echo "#|9) Windows 11 Ghost Spectre (tersedia) |       #"
+echo "#|10) Windows 11                         |       #"
 echo "##################################################"
 
 location=https://cloudshydro.tech/s/7f7JCBDBQzGffyq/download?path
@@ -49,9 +51,13 @@ case "$GETOS" in
         ;;
 	6) GETOS="$location=win10XLite$files"
         ;;
-	7) GETOS="$location=win11xLiteMicro$files"
+	7) GETOS="$location=win10neonLite$files"
         ;;
-	8) GETOS="$location=win11Ghostspectre$files"
+	8) GETOS="$location=win11xLiteMicro$files"
+        ;;
+	9) GETOS="$location=win11Ghostspectre$files"
+        ;;
+	10) GETOS="$location=soon$files"
         ;;
 	*) echo "pilihan salah"; exit;;
 esac
