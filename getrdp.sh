@@ -8,7 +8,7 @@ echo "#            List Pasword Windows                #"
 echo "#-Windows 10&11 login dengan username: Admin     #"
 echo "#-Windows 10 ReviOS username : Virtual           #"
 echo "#-Windows Server login dengan: Administrator     #"
-echo "#-------------------⇩⇩⇩⇩⇩------------------------#"
+echo "#-------------------⇩⇩⇩⇩⇩-------------------------#"
 echo "#|*Windows 2022 pw: windowsNetwork       |       #"
 echo "#|*Windows 2019 pW: comingsoon           |       #"
 echo "#|*Windows 2016 pW: comingsoon           |       #"
@@ -19,7 +19,7 @@ echo "#|*Windows 11 xLite M pW: windowsme      |       #"
 echo "#|*Windows 11 Ghost spectr pW: windowsme |       #"
 echo "#------------------------------------------------#"
 echo "#!!WINDOWS CUMA BISA DI VPS UBUNTU DAN DEBIAN!!  #"
-echo "#----------------------------------------------  #"
+echo "#------------------------------------------------#"
 echo "#Install Windows yang tersedia dibawah ini:      #"
 echo "##################################################"
 echo "#|1) Windows 2022 (tersedia)             |       #"
@@ -31,7 +31,7 @@ echo "#|6) Windows 10 XLite (tersedia)         |       #"
 echo "#|7) Windows 10 NeonLite (tersedia)      |       #"
 echo "#|8) Windows 11 x Lite Micro (tersedia)  |       #"
 echo "#|9) Windows 11 Ghost Spectre (tersedia) |       #"
-echo "#|10) Windows 11                         |       #"
+echo "#|10) Windows 11 24H2 x Lite (tersedia)  |       #"
 echo "##################################################"
 
 location=https://cloudshydro.tech/s/7f7JCBDBQzGffyq/download?path
@@ -58,7 +58,7 @@ case "$GETOS" in
         ;;
 	9) GETOS="$location=win11Ghostspectre$files"
         ;;
-	10) GETOS="$location=soon$files"
+	10) GETOS="$location=win1124H2xLite$files"
         ;;
 	*) echo "pilihan salah"; exit;;
 esac
