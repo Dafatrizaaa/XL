@@ -2,6 +2,7 @@
 #
 #CREATE BY KANGQULL
 #
+sudo apt install aria2 -y
 echo "##################################################"
 echo "#            List Pasword Windows                #"
 echo "#-Windows 10&11 login dengan username: Admin     #"
@@ -62,7 +63,7 @@ case "$GETOS" in
 	*) echo "pilihan salah"; exit;;
 esac
 
-wget -q --no-check-certificate -O- $GETOS | gunzip | dd of=/dev/vda
+aria2c --no-check-certificate -o - "$GETOS" | gunzip -c | dd of=/dev/vda
 
 echo 'Trimakasih telah menggunakan script by KangQull'
 echo ''
