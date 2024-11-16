@@ -2,7 +2,6 @@
 #
 #CREATE BY KANGQULL
 #
-sudo apt install aria2 -y
 echo "##################################################"
 echo "#            List Pasword Windows                #"
 echo "#-Windows 10&11 login dengan username: Admin     #"
@@ -34,7 +33,8 @@ echo "#|9) Windows 11 Ghost Spectre (tersedia) |       #"
 echo "#|10) Windows 11 24H2 x Lite (tersedia)  |       #"
 echo "##################################################"
 
-location=https://cloudshydro.tech/s/7f7JCBDBQzGffyq/download?path
+location=https://cloudshydro.tech/s/gABn6KJM9bzbKWf/download?path
+
 files=.gz
 
 read -p "Pilih Windows sesuai nomor: " GETOS
@@ -63,7 +63,7 @@ case "$GETOS" in
 	*) echo "pilihan salah"; exit;;
 esac
 
-aria2c --no-check-certificate -o - "$GETOS" | gunzip -c | dd of=/dev/vda
+wget -q -O- --no-check-certificate "$GETOS" | gunzip -c | dd of=/dev/vda
 
 echo 'Trimakasih telah menggunakan script by KangQull'
 echo ''
