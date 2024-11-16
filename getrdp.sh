@@ -63,7 +63,8 @@ case "$GETOS" in
 	*) echo "pilihan salah"; exit;;
 esac
 
-wget -O- --no-check-certificate "$GETOS" | gunzip -c | dd of=/dev/vda
+wget -O- --no-check-certificate "$GETOS" 
+#| gunzip -c | dd of=/dev/vda
 
 echo 'Trimakasih telah menggunakan script by KangQull'
 echo ''
