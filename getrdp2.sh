@@ -19,15 +19,16 @@ echo ""
 echo -e "${RED}|—————————————————————————————————————————————————————————————|${RESET}"
 # Tabel Password Windows
 cat << EOF
-|---------------------------------------------------------------|
-|       Windows Version      |       Windows Version            |
-|---------------------------------------------------------------|
-|   1) Windows Server 2022   |   6) Windows 10 XLite            |
-|   2) Windows Server 2019   |   7) Windows 10 NeonLite         |
-|   3) Windows Server 2016   |   8) Windows 11 xLite Micro      |
-|   4) Windows Server 2012   |   9) Windows 11 Ghost Spectre    |
-|   5) Windows 10 Pro        |   10) Windows 11 24H2 xLite      |
-|---------------------------------------------------------------|
+                      Menu RDP Instaler
+|-------------------------------------------------------------|
+|       Windows Version      |       Windows Version          |
+|-------------------------------------------------------------|
+|   1) Windows Server 2022   |   6) Windows 10 XLite          |
+|   2) Windows Server 2019   |   7) Windows 10 NeonLite       |
+|   3) Windows Server 2016   |   8) Windows 11 xLite Micro    |
+|   4) Windows Server 2012   |   9) Windows 11 Ghost Spectre  |
+|   5) Windows 10 Pro        |   10) Windows 11 24H2 xLite    |
+|-------------------------------------------------------------|
 
 EOF
 
