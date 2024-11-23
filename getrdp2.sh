@@ -23,8 +23,8 @@ cat << EOF
 |   1) Windows Server 2022   |   6) Windows 10 XLite          |
 |   2) Windows Server 2019   |   7) Windows 10 NeonLite       |
 |   3) Windows Server 2016   |   8) Windows 11 xLite Micro    |
-|   4) Windows 11 Xlite no pw|   9) Windows 11 Ghost Spectre  |
-|   5) Windows 10 Pro        |   10) Windows 11 24H2 xLite    |
+|   4) Windows 11 Xlite      |   9) Windows 11 Ghost Spectre  |
+|   5) Windows 10 LTSC       |   10) Windows 11 24H2 xLite    |
 |-------------------------------------------------------------|
 
 EOF
@@ -46,7 +46,7 @@ case "$GETOS" in
     2) PASSWORD="comingsoon"; GETOS="soon" ;;
     3) PASSWORD="comingsoon"; GETOS="soon" ;;
     4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=win11xLitenoPW$files" ;;
-    5) USER="Admin"; PASSWORD="windows.me"; GETOS="$location=windows10lite$files" ;;
+    5) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=windows10ltsc$files" ;;
     6) USER="Admin"; PASSWORD="windows.me"; GETOS="$location=win10XLite$files" ;;
     7) USER="Admin"; PASSWORD="windows.me"; GETOS="$location=win10neonLite$files" ;;
     8) USER="Admin"; PASSWORD="windows.me"; GETOS="$location=win11xLiteMicro$files" ;;
