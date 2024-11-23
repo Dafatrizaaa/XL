@@ -45,7 +45,7 @@ case "$GETOS" in
     1) USER="Administrator"; PASSWORD="windowsNetwork"; GETOS="$location=win2022$files" ;;
     2) PASSWORD="comingsoon"; GETOS="soon" ;;
     3) PASSWORD="comingsoon"; GETOS="soon" ;;
-    4) USER="Admin"; GETOS="$location=win11xLitenoPW$files" ;;
+    4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=win11xLitenoPW$files" ;;
     5) USER="Admin"; PASSWORD="windows.me"; GETOS="$location=windows10lite$files" ;;
     6) USER="Admin"; PASSWORD="windows.me"; GETOS="$location=win10XLite$files" ;;
     7) USER="Admin"; PASSWORD="windows.me"; GETOS="$location=win10neonLite$files" ;;
@@ -58,7 +58,7 @@ case "$GETOS" in
         ;;
 esac
 
-echo "Membuat Username dan Password:"
+echo "Membuat Password untuk RDP:"
 read -p "Masukkan password: " password
 
 # Cek Koneksi Internet
@@ -83,11 +83,11 @@ echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas",
 "%temp%\Admin.vbs"
 del /f /q "%temp%\Admin.vbs"
 exit /b 2)
-net user Admin $password
+net user $USER $password
 
-netsh interface ip set address "Ethernet Instance 0 2" source=static address=$IP4 mask=255.255.240.0 gateway=$GW
-netsh interface ip add dns "Ethernet Instance 0 2" addr=1.1.1.1 index=1 validate=no
-netsh interface ip add dns "Ethernet Instance 0 2" addr=8.8.8.8 index=2 validate=no
+netsh interface ip set address "$IFACE" source=static address=$IP4 mask=255.255.240.0 gateway=$GW
+netsh interface ip add dns "$IFACE" addr=1.1.1.1 index=1 validate=no
+netsh interface ip add dns "IFACE" addr=8.8.8.8 index=2 validate=no
 
 
 cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
@@ -136,10 +136,9 @@ if [[ "$CONFIRM" != "y" ]]; then
 fi
 
 # Download dan Instal OS dari URL
-wget --no-check-certificate -O- $PILIHOS | gunzip | dd of=/dev/vda bs=3M status=progress
+wget --no-check-certificate -O- $GETOS | gunzip | dd of=/dev/vda bs=3M status=progress
 
 # Mount sistem file Windows
-mkdir /mnt
 mount.ntfs-3g /dev/vda2 /mnt
 cd "/mnt/ProgramData/Microsoft/Windows/Start Menu/Programs/"
 cd Start* || cd start*; \
