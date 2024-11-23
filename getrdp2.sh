@@ -127,9 +127,9 @@ echo -e "${RED}----------------------------------------------------${RESET}"
 echo -e "${RED}🔑Information!!${RESET}"
 echo -e "${RED}Username${RESET} : $USER"
 echo -e "${RED}Password${RESET} : $password"
-echo -e "${RED}IP${RESET} : $IP4"
-echo -e "${RED}NETMASK${RESET} : $NETMASK"
-echo -e "${RED}GATEWAY${RESET} : $GW"
+echo -e "${RED}IP${RESET}       : $IP4"
+echo -e "${RED}NETMASK${RESET}  : $NETMASK"
+echo -e "${RED}GATEWAY${RESET}  : $GW"
 echo -e "${RED}----------------------------------------------------${RESET}"
 
 # Konfirmasi unduhan
@@ -139,8 +139,9 @@ if [[ "$CONFIRM" != "y" ]]; then
     exit 0
 fi
 
+echo -e "${RED}Tunggu hingga prosses selesai...${RESET}"
 # Download dan Instal OS dari URL
-wget --no-check-certificate -q -O - $GETOS | gunzip | dd of=/dev/vda bs=3M status=progress
+wget --no-check-certificate -O- $GETOS | gunzip | dd of=/dev/vda bs=3M status=progress
 
 # Mount sistem file Windows
 mount.ntfs-3g /dev/vda2 /mnt
