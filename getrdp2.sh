@@ -74,6 +74,7 @@ fi
 # Mendapatkan IP Publik dan Gateway
 IP4=$(curl -4 -s icanhazip.com)
 GW=$(ip route | awk '/default/ { print $3 }')
+NETMASK=$(ifconfig eth0 | grep 'inet ' | awk '{print $4}' | cut -d':' -f2)
 
 cat >/tmp/net.bat<<EOF
 @ECHO OFF
@@ -85,7 +86,7 @@ del /f /q "%temp%\Admin.vbs"
 exit /b 2)
 net user $USER $password
 
-netsh interface ip set address "$IFACE" source=static address=$IP4 mask=255.255.240.0 gateway=$GW
+netsh interface ip set address "$IFACE" source=static address=$IP4 mask=$NETMASK gateway=$GW
 netsh interface ip add dns "$IFACE" addr=1.1.1.1 index=1 validate=no
 netsh interface ip add dns "IFACE" addr=8.8.8.8 index=2 validate=no
 
