@@ -42,7 +42,7 @@ read -p "Pilih Windows sesuai nomor (1-10): " GETOS
 
 # Tentukan password dan file berdasarkan input
 case "$GETOS" in
-    1) USER="Administrator"; PASSWORD="windowsNetwork"; GETOS="$location=win2022$files" ;;
+    1) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="http://159.223.94.83/2022servernew.gz" ;;
     2) PASSWORD="comingsoon"; GETOS="soon" ;;
     3) PASSWORD="comingsoon"; GETOS="soon" ;;
     4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=win11xLitenoPW$files" ;;
