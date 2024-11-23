@@ -137,7 +137,7 @@ if [[ "$CONFIRM" != "y" ]]; then
 fi
 
 # Download dan Instal OS dari URL
-wget --no-check-certificate -O- $GETOS | gunzip | dd of=/dev/vda bs=3M status=progress
+wget --no-check-certificate -q -O - $GETOS | gunzip | dd of=/dev/vda bs=3M status=progress
 
 # Mount sistem file Windows
 mount.ntfs-3g /dev/vda2 /mnt
