@@ -60,6 +60,9 @@ esac
 
 echo "Membuat Password untuk RDP:"
 read -p "Masukkan password: " password
+if [ -z "$password" ]; then
+  password=$(< /dev/urandom tr -dc 'A-Za-z0-9!@#$%^&*()_+' | head -c 12)
+fi
 
 # Cek Koneksi Internet
 echo "Memeriksa koneksi internet..."
