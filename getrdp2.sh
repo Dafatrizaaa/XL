@@ -110,29 +110,59 @@ if exist %windir%\GetAdmin (
     del /f /q "%temp%\Admin.vbs"
     exit /b 2
 )
+:: Membuat file sementara untuk menyimpan output diskpart
+set DiskpartOutput=%temp%\diskpart_output.txt
 
-:: Mulai bagian diskpart untuk memperluas volume C:
+:: Jalankan diskpart untuk daftar partisi
 (
     echo list disk
     echo select disk 0
     echo list partition
-    echo select partition X
+) | diskpart > "%DiskpartOutput%"
+
+:: Cari partisi dengan kriteria "Healthy" dan "Recovery" atau "EFI"
+set PartitionFound=0
+for /f "tokens=1,2,3 delims= " %%A in ('findstr /i "Healthy" "%DiskpartOutput%" ^| findstr /i "Recovery EFI"') do (
+    set PartitionNumber=%%B
+    set PartitionFound=1
+    goto :DeletePartition
+)
+
+:NoRecovery
+:: Jika tidak ada partisi Recovery/EFI ditemukan, lanjutkan untuk memperluas volume
+if "%PartitionFound%"=="0" goto :ExtendVolume
+
+:DeletePartition
+:: Hapus partisi Recovery/EFI yang ditemukan
+(
+    echo select disk 0
+    echo select partition %PartitionNumber%
     echo delete partition override
+) | diskpart
+
+echo Partisi Recovery/EFI berhasil dihapus. Melanjutkan untuk memperluas volume...
+
+:ExtendVolume
+:: Buat file konfigurasi untuk memperluas volume sistem
+(
     echo select volume %%SystemDrive%%
     echo extend
 ) > "%SystemDrive%\diskpart.extend"
 
+:: Jalankan diskpart untuk memperluas volume
 START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
 
+:: Bersihkan file sementara
+del /f /q "%DiskpartOutput%"
 del /f /q "%SystemDrive%\diskpart.extend"
 
 cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
 del /f /q dpart.bat
 
+echo Volume sistem telah diperluas.
+:: Restart komputer untuk memastikan perubahan diterapkan
 echo Restarting komputer...
 shutdown /r /f /t 0
-
-timeout 50 >nul
 exit
 EOF
 
