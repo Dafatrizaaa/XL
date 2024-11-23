@@ -101,25 +101,38 @@ EOF
 
 cat >/tmp/dpart.bat<<EOF
 @ECHO OFF
-cd.>%windir%\GetAdmin
-if exist %windir%\GetAdmin (del /f /q "%windir%\GetAdmin") else (
-echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas", 1 >> "%temp%\Admin.vbs"
-"%temp%\Admin.vbs"
-del /f /q "%temp%\Admin.vbs"
-exit /b 2)
+cd . > %windir%\GetAdmin
+if exist %windir%\GetAdmin (
+    del /f /q "%windir%\GetAdmin"
+) else (
+    echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas", 1 >> "%temp%\Admin.vbs"
+    "%temp%\Admin.vbs"
+    del /f /q "%temp%\Admin.vbs"
+    exit /b 2
+)
 
-ECHO SELECT VOLUME=%%SystemDrive%% > "%SystemDrive%\diskpart.extend"
-ECHO EXTEND >> "%SystemDrive%\diskpart.extend"
+:: Mulai bagian diskpart untuk memperluas volume C:
+(
+    echo list disk
+    echo select disk 0
+    echo list partition
+    echo select partition X
+    echo delete partition override
+    echo select volume %%SystemDrive%%
+    echo extend
+) > "%SystemDrive%\diskpart.extend"
+
 START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
 
 del /f /q "%SystemDrive%\diskpart.extend"
-cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
-del /f /q dpart.bat
-timeout 50 >nul
 
-:: Restart komputer
+cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
+del /f /q dpart.bat
+
 echo Restarting komputer...
 shutdown /r /f /t 0
+
+timeout 50 >nul
 exit
 EOF
 
