@@ -124,9 +124,12 @@ clear
 # Tampilkan password sebelum mengunduh
 echo ""
 echo -e "${RED}----------------------------------------------------${RESET}"
-echo -e "${RED}🔑 Password untuk Windows yang dipilih:${RESET}"
+echo -e "${RED}🔑Information!!${RESET}"
 echo -e "${RED}Username${RESET} : $USER"
 echo -e "${RED}Password${RESET} : $password"
+echo -e "${RED}IP${RESET} : $IP4"
+echo -e "${RED}NETMASK${RESET} : $NETMASK"
+echo -e "${RED}GATEWAY${RESET} : $GW"
 echo -e "${RED}----------------------------------------------------${RESET}"
 
 # Konfirmasi unduhan
