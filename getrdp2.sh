@@ -59,7 +59,7 @@ case "$GETOS" in
 esac
 
 echo "Membuat Password untuk RDP:"
-read -p "Masukkan password: " password
+read -p "Masukkan password ('Enter' untuk randome password): " password
 if [ -z "$password" ]; then
   password=$(< /dev/urandom tr -dc 'A-Za-z0-9!@#$%^&*()_+' | head -c 12)
 fi
