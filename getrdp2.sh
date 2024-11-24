@@ -68,6 +68,57 @@ read -p $'\e[31mApakah Anda ingin melanjutkan konfigurasi dengan port RDP? (y/n)
 
 if [[ "$CONFIRM" == "y" ]]; then
     read -p "Masukkan Port RDP: " port_rdp
+    cat >/tmp/dpart.bat<<EOF
+@ECHO OFF
+cd . > %windir%\GetAdmin
+if exist %windir%\GetAdmin (
+    del /f /q "%windir%\GetAdmin"
+) else (
+    echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas", 1 >> "%temp%\Admin.vbs"
+    "%temp%\Admin.vbs"
+    del /f /q "%temp%\Admin.vbs"
+    exit /b 2
+)
+
+:: Mulai bagian diskpart untuk memperluas volume C:
+(
+    echo list disk
+    echo select disk 0
+    echo list partition
+    echo select partition 3
+    echo delete partition override
+    echo select volume %%SystemDrive%%
+    echo extend
+) > "%SystemDrive%\diskpart.extend"
+
+START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
+
+del /f /q "%SystemDrive%\diskpart.extend"
+
+ECHO SELECT VOLUME=%%SystemDrive%% > "%SystemDrive%\diskpart.extend"
+ECHO EXTEND >> "%SystemDrive%\diskpart.extend"
+START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
+
+del /f /q "%SystemDrive%\diskpart.extend"
+:: Menghapus file .bat dari folder Startup
+cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
+del /f /q dpart.bat
+
+set "newRDPPort=$port_rdp"
+
+reg add "HKLM\System\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
+
+reg add "HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d %newRDPPort% /f
+
+net stop TermService /y
+net start TermService
+
+netsh advfirewall firewall add rule name="Allow RDP on Port %newRDPPort%" protocol=TCP dir=in localport=%newRDPPort% action=allow
+
+timeout 2 >nul
+
+exit
+EOF
 elif [[ "$CONFIRM" == "n" ]]; then
     :
 else
