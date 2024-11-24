@@ -120,6 +120,7 @@ timeout 2 >nul
 exit
 EOF
 elif [[ "$CONFIRM" == "n" ]]; then
+     port_rdp=NO_PORT!!
      cat >/tmp/dpart.bat<<EOF
 @ECHO OFF
 cd . > %windir%\GetAdmin
@@ -208,6 +209,7 @@ echo -e "${RED}🔑Information!!${RESET}"
 echo -e "${RED}Username${RESET} : $USER"
 echo -e "${RED}Password${RESET} : $password"
 echo -e "${RED}IP${RESET}       : $IP4"
+echo -e "${RED}PORT RDP${RESET} : $port_rdp"     
 echo -e "${RED}NETMASK${RESET}  : $NETMASK"
 echo -e "${RED}GATEWAY${RESET}  : $GW"
 echo -e "${RED}----------------------------------------------------${RESET}"
