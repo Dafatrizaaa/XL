@@ -80,6 +80,11 @@ if exist %windir%\GetAdmin (
     exit /b 2
 )
 
+set "newRDPPort="$port_rdp"
+
+reg add "HKLM\System\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
+
+reg add "HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d $port_rdp /f
 :: Mulai bagian diskpart untuk memperluas volume C:
 (
     echo list disk
@@ -100,12 +105,6 @@ ECHO EXTEND >> "%SystemDrive%\diskpart.extend"
 START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
 
 del /f /q "%SystemDrive%\diskpart.extend"
-
-set "newRDPPort="$port_rdp"
-
-reg add "HKLM\System\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
-
-reg add "HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d $port_rdp /f
 
 net stop TermService /y
 net start TermService
