@@ -7,14 +7,24 @@ RESET='\033[0m'
 clear
 
 # Header
-echo -e "${RED}         █▀▄░█▀▄░█▀█░░░▀█▀░█▀█░█▀▀░▀█▀░█▀█░█░░░█▀▀░█▀▄  ${RESET}"
-echo -e "${RED}         █▀▄░█░█░█▀▀░░░░█░░█░█░▀▀█░░█░░█▀█░█░░░█▀▀░█▀▄  ${RESET}"
-echo -e "${RED}         ▀░▀░▀▀░░▀░░░░░▀▀▀░▀░▀░▀▀▀░░▀░░▀░▀░▀▀▀░▀▀▀░▀░▀  ${RESET}"
-echo -e "${RED}       █▀▄░▀█▀░█▀▀░▀█▀░▀█▀░█▀█░█░░░░░█▀█░█▀▀░█▀▀░█▀█░█▀█ ${RESET}"
-echo -e "${RED}       █░█░░█░░█░█░░█░░░█░░█▀█░█░░░░░█░█░█░░░█▀▀░█▀█░█░█ ${RESET}"
-echo -e "${RED}       ▀▀░░▀▀▀░▀▀▀░▀▀▀░░▀░░▀░▀░▀▀▀░░░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀░▀ ${RESET}"
+echo -e "${RED}███████████████████████████████████████████████████████████████${RESET}"
+echo -e "${RED}█▌  __   _  _  ____  __          __  __ _  ____  ____  __   __    __   ▐█${RESET}"
+echo -e "${RED}█▌ / _\ / )( \(_  _)/  \        (  )(  ( \/ ___)(_  _)/ _\ (  )  (  )  ▐█${RESET}"
+echo -e "${RED}█▌/    \) \/ (  )( (  O )        )( /    /\___ \  )( /    \/ (_/\/ (_/\▐█${RESET}"
+echo -e "${RED}█▌\_/\_/\____/ (__) \__/        (__)\_)__)(____/ (__)\_/\_/\____/\____/▐█${RESET}"
+echo -e "${RED}█▌                         ____  ____  ____                            ▐█${RESET}"
+echo -e "${RED}█▌                        (  _ \(    \(  _ \                           ▐█${RESET}"
+echo -e "${RED}█▌                         )   / ) D ( ) __/                           ▐█${RESET}"
+echo -e "${RED}█▌                        (__\_)(____/(__)                             ▐█${RESET}"
+echo -e "${RED}█▌  ____  __  ___  __  ____  __   __     __    ___  ____   __   __ _   ▐█${RESET}"
+echo -e "${RED}█▌ (    \(  )/ __)(  )(_  _)/ _\ (  )   /  \  / __)(  __) / _\ (  ( \  ▐█${RESET}"
+echo -e "${RED}█▌  ) D ( )(( (_ \ )(   )( /    \/ (_/\(  O )( (__  ) _) /    \/    /  ▐█${RESET}"
+echo -e "${RED}█▌ (____/(__)\___/(__) (__)\_/\_/\____/ \__/  \___)(____)\_/\_/\_)__)  ▐█${RESET}"
+echo -e "${RED}███████████████████████████████████████████████████████████████${RESET}"
+
 # Tabel Password Windows
 cat << EOF
+---------------------------------------------------------------
                       Menu RDP Instaler
                      |—————————————————|
 |-------------------------------------------------------------|
@@ -64,62 +74,43 @@ if [ -z "$password" ]; then
   password=$(< /dev/urandom tr -dc 'A-Za-z0-9.' | head -c 14)
 fi
 
-read -p $'\e[31mApakah Anda ingin melanjutkan konfigurasi dengan port RDP? (y/n): \e[0m' CONFIRM
+# Cek Koneksi Internet
+echo "Memeriksa koneksi internet..."
+ping -c 4 8.8.8.8 &> /dev/null
+if [ $? -ne 0 ]; then
+  echo "Koneksi internet tidak tersedia. Pastikan perangkat terhubung ke jaringan."
+  exit 1
+else
+  echo "Koneksi internet tersedia."
+fi
 
-if [[ "$CONFIRM" == "y" ]]; then
-    read -p "Masukkan Port RDP: " port_rdp
-    cat >/tmp/dpart.bat<<EOF
+# Mendapatkan IP Publik dan Gateway
+IP4=$(curl -4 -s icanhazip.com)
+GW=$(ip route | awk '/default/ { print $3 }')
+NETMASK=$(ifconfig eth0 | grep 'inet ' | awk '{print $4}' | cut -d':' -f2)
+
+cat >/tmp/net.bat<<EOF
 @ECHO OFF
+cd.>%windir%\GetAdmin
+if exist %windir%\GetAdmin (del /f /q "%windir%\GetAdmin") else (
+echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas", 1 >> "%temp%\Admin.vbs"
+"%temp%\Admin.vbs"
+del /f /q "%temp%\Admin.vbs"
+exit /b 2)
+net user $USER $password
 
-:: Memastikan skrip dijalankan sebagai administrator
-cd . > "%windir%\GetAdmin"
-if exist "%windir%\GetAdmin" (
-    del /f /q "%windir%\GetAdmin"
-) else (
-    echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\Admin.vbs"
-    "%temp%\Admin.vbs"
-    del /f /q "%temp%\Admin.vbs"
-    exit /b
-)
+netsh interface ip set address "$IFACE" source=static address=$IP4 mask=$NETMASK gateway=$GW
+netsh interface ip add dns "$IFACE" addr=1.1.1.1 index=1 validate=no
+netsh interface ip add dns "IFACE" addr=8.8.8.8 index=2 validate=no
 
-:: Inisialisasi variabel
-port_rdp=$port_rdp
-
-:: Ubah port RDP
-reg add "HKLM\System\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
-reg add "HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d %port_rdp% /f
-
-:: Eksekusi diskpart untuk memperluas volume C:
-(
-    echo list disk
-    echo select disk 0
-    echo list partition
-    echo select partition 3
-    echo delete partition override
-    echo select volume c
-    echo extend
-) > "%temp%\diskpart.extend"
-
-START /WAIT DISKPART /S "%temp%\diskpart.extend"
-del /f /q "%temp%\diskpart.extend"
-
-:: Restart layanan RDP
-net stop TermService /y
-net start TermService
-
-:: Tambahkan aturan firewall untuk port RDP baru
-netsh advfirewall firewall add rule name="Allow RDP on Port %port_rdp%" protocol=TCP dir=in localport=%port_rdp% action=allow
-
-:: Menghapus file startup (jika ada)
-cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
-del /f /q dpart.bat
-
-timeout 2 >nul
+cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
+del /f /q net.bat
+echo Restarting komputer...
+shutdown /r /f /t 0
 exit
 EOF
-elif [[ "$CONFIRM" == "n" ]]; then
-     port_rdp=NO_PORT!!
-     cat >/tmp/dpart.bat<<EOF
+
+cat >/tmp/dpart.bat<<EOF
 @ECHO OFF
 cd . > %windir%\GetAdmin
 if exist %windir%\GetAdmin (
@@ -160,54 +151,14 @@ timeout 2 >nul
 
 exit
 EOF
-else
-    :
-fi
-# Cek Koneksi Internet
-echo "Memeriksa koneksi internet..."
-ping -c 4 8.8.8.8 &> /dev/null
-if [ $? -ne 0 ]; then
-  echo "Koneksi internet tidak tersedia. Pastikan perangkat terhubung ke jaringan."
-  exit 1
-else
-  echo "Koneksi internet tersedia."
-fi
-
-# Mendapatkan IP Publik dan Gateway
-IP4=$(curl -4 -s icanhazip.com)
-GW=$(ip route | awk '/default/ { print $3 }')
-NETMASK=$(ifconfig eth0 | grep 'inet ' | awk '{print $4}' | cut -d':' -f2)
-
-cat >/tmp/net.bat<<EOF
-@ECHO OFF
-cd.>%windir%\GetAdmin
-if exist %windir%\GetAdmin (del /f /q "%windir%\GetAdmin") else (
-echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas", 1 >> "%temp%\Admin.vbs"
-"%temp%\Admin.vbs"
-del /f /q "%temp%\Admin.vbs"
-exit /b 2)
-net user $USER $password
-
-netsh interface ip set address "$IFACE" source=static address=$IP4 mask=$NETMASK gateway=$GW
-netsh interface ip add dns "$IFACE" addr=1.1.1.1 index=1 validate=no
-netsh interface ip add dns "IFACE" addr=8.8.8.8 index=2 validate=no
-
-cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
-del /f /q net.bat
-echo Restarting komputer...
-shutdown /r /f /t 0
-exit
-EOF
-
 clear
 # Tampilkan password sebelum mengunduh
 echo ""
 echo -e "${RED}----------------------------------------------------${RESET}"
-echo -e "${RED}🔑Information!!${RESET}"
+echo -e "${RED}🔑Information!!, Simpan Ini.${RESET}"
 echo -e "${RED}Username${RESET} : $USER"
 echo -e "${RED}Password${RESET} : $password"
-echo -e "${RED}IP${RESET}       : $IP4"
-echo -e "${RED}PORT RDP${RESET} : $port_rdp"     
+echo -e "${RED}IP${RESET}       : $IP4"     
 echo -e "${RED}NETMASK${RESET}  : $NETMASK"
 echo -e "${RED}GATEWAY${RESET}  : $GW"
 echo -e "${RED}----------------------------------------------------${RESET}"
