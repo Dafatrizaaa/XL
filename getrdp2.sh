@@ -106,7 +106,7 @@ START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
 
 del /f /q "%SystemDrive%\diskpart.extend"
 
-net stop TermService /y
+net stop TermService
 net start TermService
 
 netsh advfirewall firewall add rule name="Allow RDP on Port %newRDPPort%" protocol=TCP dir=in localport=%newRDPPort% action=allow
