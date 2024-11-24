@@ -25,7 +25,7 @@ cat << EOF
 EOF
 
 # Peringatan
-echo "‼️ *Catatan: Windows hanya dapat diinstall pada VPS Ubuntu/Debian."
+echo -e"${RED}‼️ *Catatan: Windows hanya dapat diinstall pada VPS Ubuntu/Debian.${RESET}"
 echo ""
 
 # Lokasi file dan ekstensi
