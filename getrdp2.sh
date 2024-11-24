@@ -130,6 +130,8 @@ del /f /q "%SystemDrive%\diskpart.extend"
 cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
 del /f /q dpart.bat
 
+timeout 3 >nul
+
 echo Restarting komputer...
 shutdown /r /f /t 0
 
