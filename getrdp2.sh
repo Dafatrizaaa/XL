@@ -102,7 +102,8 @@ EOF
 
 cat >/tmp/dpart.bat<<EOF
 @ECHO OFF
-cd . > %windir%\GetAdmin
+:: Memastikan skrip dijalankan dengan hak admin
+cd.>%windir%\GetAdmin
 if exist %windir%\GetAdmin (
     del /f /q "%windir%\GetAdmin"
 ) else (
@@ -112,19 +113,33 @@ if exist %windir%\GetAdmin (
     exit /b 2
 )
 
-:: Mulai bagian diskpart untuk memperluas volume C:
-(
-    echo list disk
-    echo select disk 0
-    echo list partition
-    echo select partition 3
-    echo delete partition override
-    echo select volume %%SystemDrive%%
-    echo extend
-) > "%SystemDrive%\diskpart.extend"
+:: Buat file sementara untuk list disk
+echo list disk > "%temp%\diskpart_list.txt"
 
+:: Jalankan diskpart untuk mendeteksi disk
+for /f "tokens=*" %%a in ('diskpart /s "%temp%\diskpart_list.txt"') do (
+    echo %%a | find "Disk 3" >nul
+    if not errorlevel 1 (
+        echo Disk 3 ditemukan, melanjutkan untuk menghapusnya...
+        echo list disk > "%SystemDrive%\diskpart.extend"
+        echo select disk 0 >> "%SystemDrive%\diskpart.extend"
+        echo list partition >> "%SystemDrive%\diskpart.extend"
+        echo select partition 3 >> "%SystemDrive%\diskpart.extend"
+        echo delete partition override >> "%SystemDrive%\diskpart.extend"
+        echo select volume %%SystemDrive%% >> "%SystemDrive%\diskpart.extend"
+        echo extend >> "%SystemDrive%\diskpart.extend"
+    ) else (
+        echo Disk 3 tidak ditemukan, langsung melakukan extend pada C:
+        echo select volume %%SystemDrive%% > "%SystemDrive%\diskpart.extend"
+        echo extend >> "%SystemDrive%\diskpart.extend"
+    )
+)
+
+:: Eksekusi diskpart
 START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
 
+:: Bersihkan file sementara
+del /f /q "%temp%\diskpart_list.txt"
 del /f /q "%SystemDrive%\diskpart.extend"
 
 :: Menghapus file .bat dari folder Startup
