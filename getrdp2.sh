@@ -59,26 +59,20 @@ case "$GETOS" in
 esac
 
 echo "Membuat Password untuk RDP:"
-read -p "Masukkan password ('Enter' untuk random password): " password
+read -p $'\e[31mMasukkan password ("ENTER" untuk random password): \e[0m' password
 if [ -z "$password" ]; then
   password=$(< /dev/urandom tr -dc 'A-Za-z0-9.' | head -c 14)
 fi
 
-# Menanyakan apakah pengguna ingin melanjutkan konfigurasi port RDP
-read -p "Apakah Anda ingin melanjutkan konfigurasi port RDP? (y/n): " CONFIRM
+read -p $'\e[31mApakah Anda ingin melanjutkan konfigurasi dengan port RDP? (y/n): \e[0m' CONFIRM
 
-# Jika memilih selain 'y', proses dibatalkan
-if [[ "$CONFIRM" != "y" ]]; then
-    echo "❌ Proses dibatalkan."
-    exit 0
+if [[ "$CONFIRM" == "y" ]]; then
+    read -p "Masukkan Port RDP: " port_rdp
+elif [[ "$CONFIRM" == "n" ]]; then
+    :
+else
+    :
 fi
-
-# Jika memilih 'y', melanjutkan untuk meminta input port RDP
-read -p "Masukkan Port RDP: " port_rdp
-
-# Tambahkan konfigurasi port RDP di sini sesuai kebutuhan
-# Misalnya, mengganti port di file konfigurasi
-# sed -i "s/^port=.*$/port=$port_rdp/" /etc/rdp/config
 # Cek Koneksi Internet
 echo "Memeriksa koneksi internet..."
 ping -c 4 8.8.8.8 &> /dev/null
