@@ -85,8 +85,8 @@ exit /b 2)
 net user $USER $password
 
 netsh interface ip set address "$IFACE" source=static address=$IP4 mask=$NETMASK gateway=$GW
-netsh interface ip add dns "$IFACE" addr=1.1.1.1 index=1 validate=no
-netsh interface ip add dns "IFACE" addr=8.8.8.8 index=2 validate=no
+netsh int ipv4 set dns name="$IFACE" static 1.1.1.1 primary validate=no
+netsh int ipv4 add dns name="$IFACE" 8.8.8.8 index=2
 
 cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
 del /f /q net.bat
@@ -136,18 +136,6 @@ timeout 2 >nul
 
 exit
 EOF
-clear
-# Tampilkan password sebelum mengunduh
-echo ""
-echo -e "${RED}----------------------------------------------------${RESET}"
-echo -e "${RED}🔑Information!!, Simpan Ini.${RESET}"
-echo -e "${RED}Username${RESET} : $USER"
-echo -e "${RED}Password${RESET} : $password"
-echo -e "${RED}IP${RESET}       : $IP4"     
-echo -e "${RED}NETMASK${RESET}  : $NETMASK"
-echo -e "${RED}GATEWAY${RESET}  : $GW"
-echo -e "${RED}----------------------------------------------------${RESET}"
-
 # Konfirmasi unduhan
 read -p "Apakah Anda ingin melanjutkan dengan unduhan dan instalasi? (y/n): " CONFIRM
 if [[ "$CONFIRM" != "y" ]]; then
@@ -159,14 +147,62 @@ echo -e "${RED}Tunggu hingga prosses selesai...${RESET}"
 # Download dan Instal OS dari URL
 wget --no-check-certificate -q -O - $GETOS | gunzip | dd of=/dev/vda bs=3M status=progress
 
-# Mount sistem file Windows
+read -p $'\033[0;31mApakah Anda ingin mengunakan port RDP (y/n): \033[0m' pilihan
+if [ "$pilihan" == "y" ]; then
+    read -p "Masukan PORT RDP: " PORT
+    cat >/tmp/portt.bat<<EOF
+@ECHO OFF
+cd.>%windir%\GetAdmin
+if exist %windir%\GetAdmin (del /f /q "%windir%\GetAdmin") else (
+echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas", 1 >> "%temp%\Admin.vbs"
+"%temp%\Admin.vbs"
+del /f /q "%temp%\Admin.vbs"
+exit /b 2)
+
+set NewPort=$PORT
+
+reg add "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v "PortNumber" /t REG_DWORD /d %NewPort% /f
+
+netsh advfirewall firewall add rule name="Allow RDP on Port %NewPort%" protocol=TCP dir=in localport=%NewPort% action=allow
+
+sc stop termservice
+
+sc start termservice
+
+cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
+
+del /f /q portt.bat
+
+exit
+EOF
 mount.ntfs-3g /dev/vda2 /mnt
 cd "/mnt/ProgramData/Microsoft/Windows/Start Menu/Programs/"
 cd Start* || cd start*; \
 cp -f /tmp/net.bat net.bat
 cp -f /tmp/dpart.bat dpart.bat
+cp -f /tmp/portt.bat portt.bat
 
-# Footer
+elif [ "$pilihan" == "n" ]; then
+PORT=NO_PORT!
+mount.ntfs-3g /dev/vda2 /mnt
+cd "/mnt/ProgramData/Microsoft/Windows/Start Menu/Programs/"
+cd Start* || cd start*; \
+cp -f /tmp/net.bat net.bat
+cp -f /tmp/dpart.bat dpart.bat
+fi
+
+# Tampilkan password sebelum mengunduh
+clear
+echo ""
+echo -e "${RED}----------------------------------------------------${RESET}"
+echo -e "${RED}🔑Information!!, Simpan Ini.${RESET}"
+echo -e "${RED}Username${RESET} : $USER"
+echo -e "${RED}Password${RESET} : $password"
+echo -e "${RED}IP${RESET}       : $IP4"
+echo -e "${RED}PORT RDP${RESET} : $PORT
+echo -e "${RED}NETMASK${RESET}  : $NETMASK"
+echo -e "${RED}GATEWAY${RESET}  : $GW"
+echo -e "${RED}----------------------------------------------------${RESET}"
 echo ""
 echo "Terima kasih telah menggunakan script ini! 🙏"
 echo "Support dan donasi: https://github.com/KangQull"
