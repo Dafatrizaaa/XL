@@ -93,9 +93,10 @@ netsh interface ip set address "$IFACE" source=static address=$IP4 mask=$NETMASK
 netsh interface ip add dns "$IFACE" addr=1.1.1.1 index=1 validate=no
 netsh interface ip add dns "IFACE" addr=8.8.8.8 index=2 validate=no
 
-
 cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
 del /f /q net.bat
+echo Restarting komputer...
+shutdown /r /f /t 0
 exit
 EOF
 
@@ -131,9 +132,6 @@ cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
 del /f /q dpart.bat
 
 timeout 3 >nul
-
-echo Restarting komputer...
-shutdown /r /f /t 0
 
 exit
 EOF
