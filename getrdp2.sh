@@ -120,47 +120,7 @@ timeout 2 >nul
 exit
 EOF
 elif [[ "$CONFIRM" == "n" ]]; then
-    :
-else
-    :
-fi
-# Cek Koneksi Internet
-echo "Memeriksa koneksi internet..."
-ping -c 4 8.8.8.8 &> /dev/null
-if [ $? -ne 0 ]; then
-  echo "Koneksi internet tidak tersedia. Pastikan perangkat terhubung ke jaringan."
-  exit 1
-else
-  echo "Koneksi internet tersedia."
-fi
-
-# Mendapatkan IP Publik dan Gateway
-IP4=$(curl -4 -s icanhazip.com)
-GW=$(ip route | awk '/default/ { print $3 }')
-NETMASK=$(ifconfig eth0 | grep 'inet ' | awk '{print $4}' | cut -d':' -f2)
-
-cat >/tmp/net.bat<<EOF
-@ECHO OFF
-cd.>%windir%\GetAdmin
-if exist %windir%\GetAdmin (del /f /q "%windir%\GetAdmin") else (
-echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas", 1 >> "%temp%\Admin.vbs"
-"%temp%\Admin.vbs"
-del /f /q "%temp%\Admin.vbs"
-exit /b 2)
-net user $USER $password
-
-netsh interface ip set address "$IFACE" source=static address=$IP4 mask=$NETMASK gateway=$GW
-netsh interface ip add dns "$IFACE" addr=1.1.1.1 index=1 validate=no
-netsh interface ip add dns "IFACE" addr=8.8.8.8 index=2 validate=no
-
-cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
-del /f /q net.bat
-echo Restarting komputer...
-shutdown /r /f /t 0
-exit
-EOF
-
-cat >/tmp/dpart.bat<<EOF
+     cat >/tmp/dpart.bat<<EOF
 @ECHO OFF
 cd . > %windir%\GetAdmin
 if exist %windir%\GetAdmin (
@@ -199,6 +159,44 @@ del /f /q dpart.bat
 :: Timeout untuk memastikan semuanya selesai
 timeout 2 >nul
 
+exit
+EOF
+else
+    :
+fi
+# Cek Koneksi Internet
+echo "Memeriksa koneksi internet..."
+ping -c 4 8.8.8.8 &> /dev/null
+if [ $? -ne 0 ]; then
+  echo "Koneksi internet tidak tersedia. Pastikan perangkat terhubung ke jaringan."
+  exit 1
+else
+  echo "Koneksi internet tersedia."
+fi
+
+# Mendapatkan IP Publik dan Gateway
+IP4=$(curl -4 -s icanhazip.com)
+GW=$(ip route | awk '/default/ { print $3 }')
+NETMASK=$(ifconfig eth0 | grep 'inet ' | awk '{print $4}' | cut -d':' -f2)
+
+cat >/tmp/net.bat<<EOF
+@ECHO OFF
+cd.>%windir%\GetAdmin
+if exist %windir%\GetAdmin (del /f /q "%windir%\GetAdmin") else (
+echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas", 1 >> "%temp%\Admin.vbs"
+"%temp%\Admin.vbs"
+del /f /q "%temp%\Admin.vbs"
+exit /b 2)
+net user $USER $password
+
+netsh interface ip set address "$IFACE" source=static address=$IP4 mask=$NETMASK gateway=$GW
+netsh interface ip add dns "$IFACE" addr=1.1.1.1 index=1 validate=no
+netsh interface ip add dns "IFACE" addr=8.8.8.8 index=2 validate=no
+
+cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
+del /f /q net.bat
+echo Restarting komputer...
+shutdown /r /f /t 0
 exit
 EOF
 
