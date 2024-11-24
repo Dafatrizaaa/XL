@@ -46,7 +46,7 @@ case "$GETOS" in
     2) PASSWORD="comingsoon"; GETOS="soon" ;;
     3) PASSWORD="comingsoon"; GETOS="soon" ;;
     4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=win11xLitenoPW$files" ;;
-    5) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="http://159.223.94.83/NEW10ltsc.gz" ;;
+    5) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW10ltsc$files" ;;
     6) USER="Admin"; PASSWORD="windows.me"; GETOS="$location=win10XLite$files" ;;
     7) USER="Admin"; PASSWORD="windows.me"; GETOS="$location=win10neonLite$files" ;;
     8) USER="Admin"; PASSWORD="windows.me"; GETOS="$location=win11xLiteMicro$files" ;;
