@@ -100,21 +100,20 @@ ECHO EXTEND >> "%SystemDrive%\diskpart.extend"
 START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
 
 del /f /q "%SystemDrive%\diskpart.extend"
-:: Menghapus file .bat dari folder Startup
-cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
-del /f /q dpart.bat
 
-set "newRDPPort=$port_rdp"
+set "newRDPPort="$port_rdp"
 
 reg add "HKLM\System\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
 
-reg add "HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d %newRDPPort% /f
+reg add "HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d $port_rdp /f
 
 net stop TermService /y
 net start TermService
 
 netsh advfirewall firewall add rule name="Allow RDP on Port %newRDPPort%" protocol=TCP dir=in localport=%newRDPPort% action=allow
-
+:: Menghapus file .bat dari folder Startup
+cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
+del /f /q dpart.bat
 timeout 2 >nul
 
 exit
