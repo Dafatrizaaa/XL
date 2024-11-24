@@ -109,7 +109,7 @@ del /f /q "%SystemDrive%\diskpart.extend"
 net stop TermService
 net start TermService
 
-netsh advfirewall firewall add rule name="Allow RDP on Port %newRDPPort%" protocol=TCP dir=in localport=%newRDPPort% action=allow
+netsh advfirewall firewall add rule name="Allow RDP on Port $port_rdp" protocol=TCP dir=in localport=$port_rdp action=allow
 :: Menghapus file .bat dari folder Startup
 cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
 del /f /q dpart.bat
