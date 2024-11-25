@@ -46,7 +46,7 @@ case "$GETOS" in
     7) USER="Admin"; PASSWORD="windows.me"; GETOS="$location=win10neonLite$files" ;;
     8) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW1124H2xLITE$files" ;;
     9) USER="Admin"; PASSWORD="windows.me"; GETOS="$location=win11Ghostspectre$files" ;;
-    10) USER="Admin"; PASSWORD="windows.me"; GETOS="$location=win1124H2xLite$files" ;;
+    10) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="http://159.223.94.83/ltscwindows10new.gz" ;;
     *) 
         echo "❌ Pilihan tidak valid! Silakan coba lagi."
         exit 1
@@ -255,7 +255,8 @@ clear
 echo ""
 echo -e "${RED}----------------------------------------------------${RESET}"
 echo -e "${RED}🔑Information!!, Simpan Ini.${RESET}"
-echo -e "${RED}Username${RESET} : $USER$NUSER"
+echo -e "${RED}Username Default${RESET} : $USER"
+echo -e "${RED}Username${RESET} : $NUSER"
 echo -e "${RED}Password${RESET} : $password"
 echo -e "${RED}IP${RESET}       : $IP4"
 echo -e "${RED}PORT RDP${RESET} : $PORT"
