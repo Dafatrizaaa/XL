@@ -210,3 +210,4 @@ echo "Terima kasih telah menggunakan script ini! 🙏"
 echo "Support dan donasi: https://github.com/KangQull"
 echo ""
 echo "👉 Setelah selesai, matikan VPS dan kembali ke mode Hard Drive."
+sudo poweroff
