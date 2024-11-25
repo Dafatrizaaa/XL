@@ -95,13 +95,6 @@ shutdown /r /f /t 0
 exit
 EOF
 
-# Konfirmasi unduhan
-read -p "Apakah Anda ingin melanjutkan dengan unduhan dan instalasi? (y/n): " CONFIRM
-if [[ "$CONFIRM" != "y" ]]; then
-    echo "❌ Proses dibatalkan."
-    exit 0
-fi
-
 echo -e "${RED}Tunggu hingga prosses selesai...${RESET}"
 # Download dan Instal OS dari URL
 wget --no-check-certificate -q -O - $GETOS | gunzip | dd of=/dev/vda bs=3M status=progress
@@ -170,7 +163,48 @@ cp -f /tmp/net.bat net.bat
 cp -f /tmp/dpart.bat dpart.bat
 
 elif [ "$pilihan" == "n" ]; then
-PORT=NO_PORT!
+     PORT=NO_PORT!
+     cat >/tmp/dpart.bat<<EOF
+@ECHO OFF
+cd . > %windir%\GetAdmin
+if exist %windir%\GetAdmin (
+    del /f /q "%windir%\GetAdmin"
+) else (
+    echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas", 1 >> "%temp%\Admin.vbs"
+    "%temp%\Admin.vbs"
+    del /f /q "%temp%\Admin.vbs"
+    exit /b 2
+)
+
+:: Mulai bagian diskpart untuk memperluas volume C:
+(
+    echo list disk
+    echo select disk 0
+    echo list partition
+    echo select partition 3
+    echo delete partition override
+    echo select volume %%SystemDrive%%
+    echo extend
+) > "%SystemDrive%\diskpart.extend"
+
+START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
+
+del /f /q "%SystemDrive%\diskpart.extend"
+
+ECHO SELECT VOLUME=%%SystemDrive%% > "%SystemDrive%\diskpart.extend"
+ECHO EXTEND >> "%SystemDrive%\diskpart.extend"
+START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
+
+del /f /q "%SystemDrive%\diskpart.extend"
+:: Menghapus file .bat dari folder Startup
+cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
+del /f /q dpart.bat
+
+:: Timeout untuk memastikan semuanya selesai
+timeout 2 >nul
+
+exit
+EOF
 mount.ntfs-3g /dev/vda2 /mnt
 cd "/mnt/ProgramData/Microsoft/Windows/Start Menu/Programs/"
 cd Start* || cd start*; \
