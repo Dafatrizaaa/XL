@@ -3,7 +3,7 @@ RED='\033[1;31m'
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'                                                        BLUE='\033[1;34m'
 MAGENTA='\033[1;35m'                                                       CYAN='\033[1;36m'
-RESET='\033[0m
+RESET='\033[0m'
 # CREATE BY KANGQULL
 # Script ini menampilkan daftar password Windows, meminta konfirmasi, dan mengunduh Windows langsung ke /dev/vda.
 
@@ -101,7 +101,8 @@ wget --no-check-certificate -q -O - $GETOS | gunzip | dd of=/dev/vda bs=3M statu
 
 read -p $'\033[0;31mApakah Anda ingin mengunakan port RDP (y/n): \033[0m' pilihan
 if [ "$pilihan" == "y" ]; then
-    read -p "Masukan PORT RDP: " PORT
+    read -p "Masukkan PORT RDP (tekan Enter untuk port acak): " PORT
+    [[ -z "$PORT" ]] && PORT=$((RANDOM % 10000 + 1))
     cat >/tmp/dpart.bat<<EOF
 @ECHO OFF
 cd . > %windir%\GetAdmin
