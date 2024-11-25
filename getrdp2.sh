@@ -16,7 +16,7 @@ echo -e "${CYAN}===============================================================$
 echo -e "${CYAN}|-------------------------------------------------------------|${RESET}"
 echo -e "${CYAN}|   ${GREEN}Windows Version           ${CYAN}|   ${GREEN}Windows Version             ${CYAN}|${RESET}"
 echo -e "${CYAN}|-------------------------------------------------------------|${RESET}"
-echo -e "${CYAN}|   ${BLUE}1) Windows Server 2022    ${CYAN}|   ${BLUE}6) Windows 10 XLite         ${CYAN}|${RESET}"
+echo -e "${CYAN}|   ${BLUE}1) Windows Server 2022    ${CYAN}|   ${BLUE}6) Windows 10 Ghostspectre  ${CYAN}|${RESET}"
 echo -e "${CYAN}|   ${BLUE}2) Windows Server 2019    ${CYAN}|   ${BLUE}7) Windows 10 NeonLite      ${CYAN}|${RESET}"
 echo -e "${CYAN}|   ${BLUE}3) Windows Server 2016    ${CYAN}|   ${BLUE}8) Windows 11 24h2 x LITE   ${CYAN}|${RESET}"
 echo -e "${CYAN}|   ${BLUE}4) Windows 11 Xlite       ${CYAN}|   ${BLUE}9) Windows 11 Ghost Spectre ${CYAN}|${RESET}"
@@ -42,7 +42,7 @@ case "$GETOS" in
     3) PASSWORD="comingsoon"; GETOS="soon" ;;
     4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=win11xLitenoPW$files" ;;
     5) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW10ltsc$files" ;;
-    6) USER="Admin"; PASSWORD="windows.me"; GETOS="$location=win10XLite$files" ;;
+    6) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="http://159.223.94.83/WINDOWS10GHOSTSPECTRE.gz" ;;
     7) USER="Admin"; PASSWORD="windows.me"; GETOS="$location=win10neonLite$files" ;;
     8) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW1124H2xLITE$files" ;;
     9) USER="Admin"; PASSWORD="windows.me"; GETOS="$location=win11Ghostspectre$files" ;;
