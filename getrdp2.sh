@@ -95,7 +95,21 @@ shutdown /r /f /t 0
 exit
 EOF
 
-cat >/tmp/dpart.bat<<EOF
+# Konfirmasi unduhan
+read -p "Apakah Anda ingin melanjutkan dengan unduhan dan instalasi? (y/n): " CONFIRM
+if [[ "$CONFIRM" != "y" ]]; then
+    echo "❌ Proses dibatalkan."
+    exit 0
+fi
+
+echo -e "${RED}Tunggu hingga prosses selesai...${RESET}"
+# Download dan Instal OS dari URL
+wget --no-check-certificate -q -O - $GETOS | gunzip | dd of=/dev/vda bs=3M status=progress
+
+read -p $'\033[0;31mApakah Anda ingin mengunakan port RDP (y/n): \033[0m' pilihan
+if [ "$pilihan" == "y" ]; then
+    read -p "Masukan PORT RDP: " PORT
+    cat >/tmp/dpart.bat<<EOF
 @ECHO OFF
 cd . > %windir%\GetAdmin
 if exist %windir%\GetAdmin (
@@ -127,37 +141,6 @@ ECHO EXTEND >> "%SystemDrive%\diskpart.extend"
 START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
 
 del /f /q "%SystemDrive%\diskpart.extend"
-:: Menghapus file .bat dari folder Startup
-cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
-del /f /q dpart.bat
-
-:: Timeout untuk memastikan semuanya selesai
-timeout 2 >nul
-
-exit
-EOF
-# Konfirmasi unduhan
-read -p "Apakah Anda ingin melanjutkan dengan unduhan dan instalasi? (y/n): " CONFIRM
-if [[ "$CONFIRM" != "y" ]]; then
-    echo "❌ Proses dibatalkan."
-    exit 0
-fi
-
-echo -e "${RED}Tunggu hingga prosses selesai...${RESET}"
-# Download dan Instal OS dari URL
-wget --no-check-certificate -q -O - $GETOS | gunzip | dd of=/dev/vda bs=3M status=progress
-
-read -p $'\033[0;31mApakah Anda ingin mengunakan port RDP (y/n): \033[0m' pilihan
-if [ "$pilihan" == "y" ]; then
-    read -p "Masukan PORT RDP: " PORT
-    cat >/tmp/portt.bat<<EOF
-@ECHO OFF
-cd.>%windir%\GetAdmin
-if exist %windir%\GetAdmin (del /f /q "%windir%\GetAdmin") else (
-echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas", 1 >> "%temp%\Admin.vbs"
-"%temp%\Admin.vbs"
-del /f /q "%temp%\Admin.vbs"
-exit /b 2)
 
 set NewPort=$PORT
 
@@ -173,7 +156,10 @@ cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
 
 shutdown /r /f /t 0
 
-del /f /q portt.bat
+del /f /q dpart.bat
+
+:: Timeout untuk memastikan semuanya selesai
+timeout 2 >nul
 
 exit
 EOF
@@ -182,7 +168,6 @@ cd "/mnt/ProgramData/Microsoft/Windows/Start Menu/Programs/"
 cd Start* || cd start*; \
 cp -f /tmp/net.bat net.bat
 cp -f /tmp/dpart.bat dpart.bat
-cp -f /tmp/portt.bat portt.bat
 
 elif [ "$pilihan" == "n" ]; then
 PORT=NO_PORT!
