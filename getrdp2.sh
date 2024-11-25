@@ -199,7 +199,7 @@ echo -e "${RED}🔑Information!!, Simpan Ini.${RESET}"
 echo -e "${RED}Username${RESET} : $USER"
 echo -e "${RED}Password${RESET} : $password"
 echo -e "${RED}IP${RESET}       : $IP4"
-echo -e "${RED}PORT RDP${RESET} : $PORT
+echo -e "${RED}PORT RDP${RESET} : $PORT"
 echo -e "${RED}NETMASK${RESET}  : $NETMASK"
 echo -e "${RED}GATEWAY${RESET}  : $GW"
 echo -e "${RED}----------------------------------------------------${RESET}"
