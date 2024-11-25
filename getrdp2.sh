@@ -173,6 +173,7 @@ cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
 
 del /f /q portt.bat
 
+shutdown /r /f /t 0
 exit
 EOF
 mount.ntfs-3g /dev/vda2 /mnt
