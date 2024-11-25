@@ -53,28 +53,52 @@ case "$GETOS" in
         ;;
 esac
 
-echo "Membuat Password untuk RDP:"
-read -p $'\e[35mMasukkan password ("ENTER" untuk random password): \e[0m' password
-if [ -z "$password" ]; then
-  password=$(< /dev/urandom tr -dc 'A-Za-z0-9.' | head -c 14)
-fi
-
-# Cek Koneksi Internet
-echo "Memeriksa koneksi internet..."
-ping -c 4 8.8.8.8 &> /dev/null
-if [ $? -ne 0 ]; then
-  echo "Koneksi internet tidak tersedia. Pastikan perangkat terhubung ke jaringan."
-  exit 1
-else
-  echo "Koneksi internet tersedia."
-fi
-
 # Mendapatkan IP Publik dan Gateway
 IP4=$(curl -4 -s icanhazip.com)
 GW=$(ip route | awk '/default/ { print $3 }')
 NETMASK=$(ifconfig eth0 | grep 'inet ' | awk '{print $4}' | cut -d':' -f2)
 
-cat >/tmp/net.bat<<EOF
+read -p $'\e[35mApakah Anda ingin membuat username atau default(n)? Y/n: \e[0m' choice
+if [[ "$choice" == "Y" || "$choice" == "y" ]]; then
+    read -p $'\e[35mMasukkan username : \e[0m' NUSER
+    read -p $'\e[35mMasukkan password ("ENTER" untuk random password): \e[0m' password
+    if [ -z "$password" ]; then
+       password=$(< /dev/urandom tr -dc 'A-Za-z0-9.' | head -c 14)
+    fi
+    cat >/tmp/net.bat<<EOF
+@ECHO OFF
+cd.>%windir%\GetAdmin
+if exist %windir%\GetAdmin (del /f /q "%windir%\GetAdmin") else (
+echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas", 1 >> "%temp%\Admin.vbs"
+"%temp%\Admin.vbs"
+del /f /q "%temp%\Admin.vbs"
+exit /b 2)  
+set NewUser=$NUSER
+set NewPassword=$password
+
+net user %NewUser% %NewPassword% /add
+
+net localgroup Administrators %NewUser% /add
+
+set OldUser=$USER
+
+net user %OldUser% /delete
+
+netsh interface ip set address "$IFACE" source=static address=$IP4 mask=$NETMASK gateway=$GW
+netsh int ipv4 set dns name="$IFACE" static 1.1.1.1 primary validate=no
+netsh int ipv4 add dns name="$IFACE" 8.8.8.8 index=2
+
+cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
+del /f /q net.bat
+
+exit
+EOF
+elif [[ "$choice" == "N" || "$choice" == "n" ]]; then
+    read -p $'\e[35mMasukkan password ("ENTER" untuk random password): \e[0m' password
+    if [ -z "$password" ]; then
+      password=$(< /dev/urandom tr -dc 'A-Za-z0-9.' | head -c 14)
+    fi
+     cat >/tmp/net.bat<<EOF
 @ECHO OFF
 cd.>%windir%\GetAdmin
 if exist %windir%\GetAdmin (del /f /q "%windir%\GetAdmin") else (
@@ -90,10 +114,23 @@ netsh int ipv4 add dns name="$IFACE" 8.8.8.8 index=2
 
 cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
 del /f /q net.bat
-echo Restarting komputer...
-shutdown /r /f /t 0
+
 exit
 EOF
+else
+    # Jika pilihan tidak valid
+    echo "Pilihan tidak valid. Harap pilih Y atau N."
+    exit 1
+fi
+# Cek Koneksi Internet
+echo "Memeriksa koneksi internet..."
+ping -c 4 8.8.8.8 &> /dev/null
+if [ $? -ne 0 ]; then
+  echo "Koneksi internet tidak tersedia. Pastikan perangkat terhubung ke jaringan."
+  exit 1
+else
+  echo "Koneksi internet tersedia."
+fi
 
 echo -e "${RED}Tunggu hingga prosses selesai...${RESET}"
 # Download dan Instal OS dari URL
@@ -218,7 +255,7 @@ clear
 echo ""
 echo -e "${RED}----------------------------------------------------${RESET}"
 echo -e "${RED}🔑Information!!, Simpan Ini.${RESET}"
-echo -e "${RED}Username${RESET} : $USER"
+echo -e "${RED}Username${RESET} : $USER$NUSER"
 echo -e "${RED}Password${RESET} : $password"
 echo -e "${RED}IP${RESET}       : $IP4"
 echo -e "${RED}PORT RDP${RESET} : $PORT"
