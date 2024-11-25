@@ -1,31 +1,31 @@
 #!/bin/bash
-RED='\033[1;31m' 
-RESET='\033[0m'
+RED='\033[1;31m'
+GREEN='\033[1;32m'
+YELLOW='\033[1;33m'                                                        BLUE='\033[1;34m'
+MAGENTA='\033[1;35m'                                                       CYAN='\033[1;36m'
+RESET='\033[0m
 # CREATE BY KANGQULL
 # Script ini menampilkan daftar password Windows, meminta konfirmasi, dan mengunduh Windows langsung ke /dev/vda.
 
 clear
 
 # Header
-# Tabel Password Windows
-cat << EOF
----------------------------------------------------------------
-                      Menu RDP Instaler
-                     |—————————————————|
-|-------------------------------------------------------------|
-|       Windows Version      |       Windows Version          |
-|-------------------------------------------------------------|
-|   1) Windows Server 2022   |   6) Windows 10 XLite          |
-|   2) Windows Server 2019   |   7) Windows 10 NeonLite       |
-|   3) Windows Server 2016   |   8) Windows 11 24h2 x LITE    |
-|   4) Windows 11 Xlite      |   9) Windows 11 Ghost Spectre  |
-|   5) Windows 10 LTSC       |   10) Windows 11 24H2 xLite    |
-|-------------------------------------------------------------|
-
-EOF
+echo -e "${CYAN}===============================================================${RESET}"
+echo -e "${MAGENTA}                 🚀 ${YELLOW}Menu RDP Installer ${MAGENTA}🚀${RESET}"
+echo -e "${CYAN}===============================================================${RESET}"
+echo -e "${CYAN}|-------------------------------------------------------------|${RESET}"
+echo -e "${CYAN}|   ${GREEN}Windows Version           ${CYAN}|   ${GREEN}Windows Version             ${CYAN}|${RESET}"
+echo -e "${CYAN}|-------------------------------------------------------------|${RESET}"
+echo -e "${CYAN}|   ${BLUE}1) Windows Server 2022    ${CYAN}|   ${BLUE}6) Windows 10 XLite         ${CYAN}|${RESET}"
+echo -e "${CYAN}|   ${BLUE}2) Windows Server 2019    ${CYAN}|   ${BLUE}7) Windows 10 NeonLite      ${CYAN}|${RESET}"
+echo -e "${CYAN}|   ${BLUE}3) Windows Server 2016    ${CYAN}|   ${BLUE}8) Windows 11 24h2 x LITE   ${CYAN}|${RESET}"
+echo -e "${CYAN}|   ${BLUE}4) Windows 11 Xlite       ${CYAN}|   ${BLUE}9) Windows 11 Ghost Spectre ${CYAN}|${RESET}"
+echo -e "${CYAN}|   ${BLUE}5) Windows 10 LTSC        ${CYAN}|   ${BLUE}10) Windows 11 24H2 xLite   ${CYAN}|${RESET}"
+echo -e "${CYAN}|-------------------------------------------------------------|${RESET}"
+echo -e "${CYAN}===============================================================${RESET}"
 
 # Peringatan
-echo -e"${RED}‼️ *Catatan: Windows hanya dapat diinstall pada VPS Ubuntu/Debian.${RESET}"
+echo -e "${RED}‼️ *Catatan: Windows hanya dapat diinstall pada VPS Ubuntu/Debian.${RESET}"
 echo ""
 
 # Lokasi file dan ekstensi
