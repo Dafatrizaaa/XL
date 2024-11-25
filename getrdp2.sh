@@ -54,7 +54,7 @@ case "$GETOS" in
 esac
 
 echo "Membuat Password untuk RDP:"
-read -p $'\e[31mMasukkan password ("ENTER" untuk random password): \e[0m' password
+read -p $'\e[35mMasukkan password ("ENTER" untuk random password): \e[0m' password
 if [ -z "$password" ]; then
   password=$(< /dev/urandom tr -dc 'A-Za-z0-9.' | head -c 14)
 fi
@@ -99,7 +99,7 @@ echo -e "${RED}Tunggu hingga prosses selesai...${RESET}"
 # Download dan Instal OS dari URL
 wget --no-check-certificate -q -O - $GETOS | gunzip | dd of=/dev/vda bs=3M status=progress
 
-read -p $'\033[0;31mApakah Anda ingin mengunakan port RDP (y/n): \033[0m' pilihan
+read -p $'\033[0;35mApakah Anda ingin mengunakan port RDP (y/n): \033[0m' pilihan
 if [ "$pilihan" == "y" ]; then
     read -p "Masukkan PORT RDP (tekan Enter untuk port acak): " PORT
     [[ -z "$PORT" ]] && PORT=$((RANDOM % 10000 + 1))
