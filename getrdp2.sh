@@ -234,8 +234,11 @@ ECHO EXTEND >> "%SystemDrive%\diskpart.extend"
 START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
 
 del /f /q "%SystemDrive%\diskpart.extend"
-:: Menghapus file .bat dari folder Startup
+
 cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
+
+shutdown /r /f /t 0
+
 del /f /q dpart.bat
 
 :: Timeout untuk memastikan semuanya selesai
