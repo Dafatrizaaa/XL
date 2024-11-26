@@ -11,7 +11,7 @@ clear
 
 # Header
 echo -e "${RED}-----------------------------------------------------------------------${RESET}"
-echo " 🌐Windows Server  |Status|   |        🌐Windows             |Status|"
+echo -e "${GREEN} 🌐Windows Server  |Status|   |        🌐Windows             |Status|"
 echo -e "${RED}-----------------------------------------------------------------------${RESET}"
 echo " 1.🪟 Windows 2022 |  🟢  |   | 6.🪟 Windows 10 PRO          |  🔴  |"
 echo " 2.🪟 Windows 2019 |  🔴  |   | 7.🪟 Windows 10 LTSC         |  🟢  |"
