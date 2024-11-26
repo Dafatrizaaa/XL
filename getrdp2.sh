@@ -11,7 +11,7 @@ clear
 
 # Header
 echo -e "${RED}-----------------------------------------------------------------------${RESET}"
-echo -e "${GREEN} 🌐Windows Server  |Status|   |        🌐Windows             |Status|"
+echo -e "${GREEN} 🌐Windows Server  |Status|   |        🌐Windows             |Status| ${RESET}"
 echo -e "${RED}-----------------------------------------------------------------------${RESET}"
 echo " 1.🪟 Windows 2022 |  🟢  |   | 6.🪟 Windows 10 PRO          |  🔴  |"
 echo " 2.🪟 Windows 2019 |  🔴  |   | 7.🪟 Windows 10 LTSC         |  🟢  |"
@@ -35,13 +35,13 @@ case "$GETOS" in
     1) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="$location=2022servernew$files" ;;
     2) PASSWORD="comingsoon"; GETOS="soon" ;;
     3) PASSWORD="comingsoon"; GETOS="soon" ;;
-    4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=win11xLitenoPW$files" ;;
-    5) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW10ltsc$files" ;;
-    6) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="http://159.223.94.83/WINDOWS10GHOSTSPECTRE.gz" ;;
-    7) USER="Admin"; PASSWORD="windows.me"; GETOS="$location=win10neonLite$files" ;;
-    8) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW1124H2xLITE$files" ;;
-    9) USER="Admin"; PASSWORD="windows.me"; GETOS="$location=win11Ghostspectre$files" ;;
-    10) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="http://159.223.94.83/ltscwindows10new.gz" ;;
+    4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="NONE" ;;
+    5) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=none$files" ;;
+    6) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="NONE" ;;
+    7) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW10ltsc$files" ;;
+    8) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="http://159.223.94.83/WINDOWS10GHOSTSPECTRE.gz" ;;
+    9) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=win11xLitenoPW$files" ;;
+    10) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW1124H2xLITE$files" ;;
     *) 
         echo "❌ Pilihan tidak valid! Silakan coba lagi."
         exit 1
