@@ -10,22 +10,17 @@ RESET='\033[0m'
 clear
 
 # Header
-echo -e "${CYAN}===============================================================${RESET}"
-echo -e "${MAGENTA}                 🚀 ${YELLOW}Menu RDP Installer ${MAGENTA}🚀${RESET}"
-echo -e "${CYAN}===============================================================${RESET}"
-echo -e "${CYAN}|-------------------------------------------------------------|${RESET}"
-echo -e "${CYAN}|   ${GREEN}Windows Version           ${CYAN}|   ${GREEN}Windows Version             ${CYAN}|${RESET}"
-echo -e "${CYAN}|-------------------------------------------------------------|${RESET}"
-echo -e "${CYAN}|   ${BLUE}1) Windows Server 2022    ${CYAN}|   ${BLUE}6) Windows 10 Ghostspectre  ${CYAN}|${RESET}"
-echo -e "${CYAN}|   ${BLUE}2) Windows Server 2019    ${CYAN}|   ${BLUE}7) Windows 10 NeonLite      ${CYAN}|${RESET}"
-echo -e "${CYAN}|   ${BLUE}3) Windows Server 2016    ${CYAN}|   ${BLUE}8) Windows 11 24h2 x LITE   ${CYAN}|${RESET}"
-echo -e "${CYAN}|   ${BLUE}4) Windows 11 Xlite       ${CYAN}|   ${BLUE}9) Windows 11 Ghost Spectre ${CYAN}|${RESET}"
-echo -e "${CYAN}|   ${BLUE}5) Windows 10 LTSC        ${CYAN}|   ${BLUE}10) Windows 11 24H2 xLite   ${CYAN}|${RESET}"
-echo -e "${CYAN}|-------------------------------------------------------------|${RESET}"
-echo -e "${CYAN}===============================================================${RESET}"
-
-# Peringatan
-echo -e "${RED}‼️ *Catatan: Windows hanya dapat diinstall pada VPS Ubuntu/Debian.${RESET}"
+echo -e "${RED}-----------------------------------------------------------------------${RESET}"
+echo " 🌐Windows Server  |Status|   |        🌐Windows             |Status|"
+echo -e "${RED}-----------------------------------------------------------------------${RESET}"
+echo " 1.🪟 Windows 2022 |  🟢  |   | 6.🪟 Windows 10 PRO          |  🔴  |"
+echo " 2.🪟 Windows 2019 |  🔴  |   | 7.🪟 Windows 10 LTSC         |  🟢  |"
+echo " 3.🪟 Windows 2016 |  🔴  |   | 8.🪟 Windows 10 GHOSTSPECTRE |  🟢  |"
+echo " 4.🪟 Windows none |  🔴  |   | 9.🪟 Windows 11 xLITE        |  🟢  |"
+echo " 5.🪟 Windows none |  🔴  |   |10.🪟 Windows 11 OPTIMIUM 24H2|  🟢  |"
+echo -e "${RED}-----------------------------------------------------------------------${RESET}"
+echo " ‼️ Keterangan  🟢 bisa digunakan ,  🔴 tidak tersedia ❗"
+echo " ‼️ Catatan: Windows hanya dapat diinstall pada VPS Ubuntu/Debian."
 echo ""
 
 # Lokasi file dan ekstensi
