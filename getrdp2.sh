@@ -160,8 +160,6 @@ if exist %windir%\GetAdmin (
 
 START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
 
-del /f /q "%SystemDrive%\diskpart.extend"
-
 ECHO SELECT VOLUME=%%SystemDrive%% > "%SystemDrive%\diskpart.extend"
 ECHO EXTEND >> "%SystemDrive%\diskpart.extend"
 START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
@@ -221,8 +219,6 @@ if exist %windir%\GetAdmin (
 ) > "%SystemDrive%\diskpart.extend"
 
 START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
-
-del /f /q "%SystemDrive%\diskpart.extend"
 
 ECHO SELECT VOLUME=%%SystemDrive%% > "%SystemDrive%\diskpart.extend"
 ECHO EXTEND >> "%SystemDrive%\diskpart.extend"
