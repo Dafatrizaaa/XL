@@ -36,7 +36,7 @@ case "$GETOS" in
     2) PASSWORD="comingsoon"; GETOS="soon" ;;
     3) PASSWORD="comingsoon"; GETOS="soon" ;;
     4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="NONE" ;;
-    5) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=none$files" ;;
+    5) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="http://159.223.94.83/11original.gz" ;;
     6) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="NONE" ;;
     7) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW10ltsc$files" ;;
     8) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=WINDOWS10GHOSTSPECTRE$files" ;;
