@@ -1,27 +1,26 @@
 #!/bin/bash
+
+# Definisi warna ANSI
 RED='\033[1;31m'
 GREEN='\033[1;32m'
-YELLOW='\033[1;33m'                                                        BLUE='\033[1;34m'
-MAGENTA='\033[1;35m'                                                       CYAN='\033[1;36m'
+YELLOW='\033[1;33m'
+BLUE='\033[1;34m'
+MAGENTA='\033[1;35m'
+CYAN='\033[1;36m'
 RESET='\033[0m'
-# CREATE BY KANGQULL
-# Script ini menampilkan daftar password Windows, meminta konfirmasi, dan mengunduh Windows langsung ke /dev/vda.
-
 clear
-
-# Header
-echo -e "${RED}-----------------------------------------------------------------------${RESET}"
-echo -e "${GREEN} 🌐Windows Server  |Status|   |        🌐Windows             |Status| ${RESET}"
-echo -e "${RED}-----------------------------------------------------------------------${RESET}"
-echo " 1.🪟 Windows 2022 |  🟢  |   | 6.🪟 Windows 10 PRO          |  🔴  |"
-echo " 2.🪟 Windows 2019 |  🔴  |   | 7.🪟 Windows 10 LTSC         |  🟢  |"
-echo " 3.🪟 Windows 2016 |  🔴  |   | 8.🪟 Windows 10 GHOSTSPECTRE |  🟢  |"
-echo " 4.🪟 Windows none |  🔴  |   | 9.🪟 Windows 11 xLITE        |  🟢  |"
-echo " 5.🪟 Windows none |  🔴  |   |10.🪟 Windows 11 OPTIMIUM 24H2|  🟢  |"
-echo -e "${RED}-----------------------------------------------------------------------${RESET}"
-echo " ‼️ Keterangan  🟢 bisa digunakan ,  🔴 tidak tersedia ❗"
-echo " ‼️ Catatan: Windows hanya dapat diinstall pada VPS Ubuntu/Debian."
-echo ""
+# Banner
+echo -e "${RED}==========================================${RESET}"
+echo -e "${YELLOW}🔥  ${GREEN}Daftar Versi Windows: ${YELLOW}🔥${RESET}"
+echo -e "${RED}==========================================${RESET}"
+echo -e "${BLUE}1. 🔥  Windows Server 2022      ${CYAN}- Edisi Terbaru untuk Server${RESET}"
+echo -e "${MAGENTA}2. 🔥  Windows Server 2019      ${CYAN}- Stabilitas dan Keamanan${RESET}"
+echo -e "${GREEN}3. 🔥  Windows Server 2016      ${CYAN}- Stabilitas dan Performa${RESET}"
+echo -e "${YELLOW}4. 🔥  Windows 10 Pro           ${CYAN}- Windows 10 Spectre Profesional${RESET}"
+echo -e "${RED}5. 🔥  Windows 10 LTSC          ${CYAN}- Untuk Penggunaan Personal${RESET}"
+echo -e "${MAGENTA}6. 🔥  Windows 11 Pro           ${CYAN}- Modern dan Elegan${RESET}"
+echo -e "${BLUE}7. 🔥  Windows 11 xLITE         ${CYAN}- Teknologi Terbaru Windows 11 by XLITE${RESET}"
+echo -e "${RED}==========================================${RESET}"
 
 # Lokasi file dan ekstensi
 location="https://cloudshydro.tech/s/gABn6KJM9bzbKWf/download?path"
@@ -35,13 +34,10 @@ case "$GETOS" in
     1) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="$location=2022servernew$files" ;;
     2) PASSWORD="comingsoon"; GETOS="soon" ;;
     3) PASSWORD="comingsoon"; GETOS="soon" ;;
-    4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="NONE" ;;
-    5) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="http://159.223.94.83/11original.gz" ;;
+    4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=WINDOWS10GHOSTSPECTRE$files" ;;
+    5) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW10ltsc$files" ;;
     6) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="NONE" ;;
-    7) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW10ltsc$files" ;;
-    8) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=WINDOWS10GHOSTSPECTRE$files" ;;
-    9) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=win11xLitenoPW$files" ;;
-    10) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW1124H2xLITE$files" ;;
+    7) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW1124H2xLITE$files" ;;
     *) 
         echo "❌ Pilihan tidak valid! Silakan coba lagi."
         exit 1
