@@ -125,7 +125,7 @@ fi
 
 echo -e "${RED}Tunggu hingga prosses selesai...${RESET}"
 # Download dan Instal OS dari URL
-wget --no-check-certificate -q -O - $GETOS | gunzip | dd of=/dev/vda bs=3M status=progress
+wget --no-check-certificate -O- $GETOS | gunzip | dd of=/dev/vda bs=3M status=progress
 
 read -p $'\033[0;35mApakah Anda ingin mengunakan port RDP (y/n): \033[0m' pilihan
 if [ "$pilihan" == "y" ]; then
@@ -174,6 +174,8 @@ sc start termservice
 
 cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
 
+
+timeout /t 4 /nobreak >nul
 
 shutdown /r /f /t 0
 
@@ -225,6 +227,8 @@ del /f /q "%SystemDrive%\diskpart.extend"
 
 cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
 
+
+timeout /t 4 /nobreak >nul
 
 shutdown /r /f /t 0
 
