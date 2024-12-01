@@ -17,8 +17,8 @@ echo -e "${BLUE}1. 🔥  Windows Server 2022      ${CYAN}- Edisi Terbaru untuk S
 echo -e "${MAGENTA}2. 🔥  Windows Server 2019      ${CYAN}- Stabilitas dan Keamanan${RESET}"
 echo -e "${GREEN}3. 🔥  Windows Server 2016      ${CYAN}- Stabilitas dan Performa${RESET}"
 echo -e "${YELLOW}4. 🔥  Windows 10 Pro           ${CYAN}- Windows 10 Spectre Profesional${RESET}"
-echo -e "${RED}5. 🔥  Windows 10 LTSC          ${CYAN}- Untuk Penggunaan Personal${RESET}"
-echo -e "${MAGENTA}6. 🔥  Windows 11 Pro           ${CYAN}- Windows 11 PRO 23H2${RESET}"
+echo -e "${RED}5. 🔥  Windows 10 LTSC          ${CYAN}- Untuk Penggunaan minimalis${RESET}"
+echo -e "${MAGENTA}6. 🔥  Windows 11 Pro Micro     ${CYAN}- Windows 11 PRO Micro 24H2 XLite${RESET}"
 echo -e "${BLUE}7. 🔥  Windows 11 xLITE         ${CYAN}- Teknologi Terbaru Windows 11 by XLITE${RESET}"
 echo -e "${RED}==========================================${RESET}"
 
@@ -36,7 +36,7 @@ case "$GETOS" in
     3) PASSWORD="comingsoon"; GETOS="soon" ;;
     4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=WINDOWS10GHOSTSPECTRE$files" ;;
     5) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW10ltsc$files" ;;
-    6) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="http://167.71.221.167/11original.gz" ;;
+    6) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=11micro24h2$files" ;;
     7) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW1124H2xLITE$files" ;;
     *) 
         echo "❌ Pilihan tidak valid! Silakan coba lagi."
