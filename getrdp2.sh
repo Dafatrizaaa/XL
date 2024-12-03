@@ -13,9 +13,9 @@ clear
 echo -e "${RED}==========================================${RESET}"
 echo -e "${YELLOW}🔥  ${GREEN}Daftar Versi Windows: ${YELLOW}🔥${RESET}"
 echo -e "${RED}==========================================${RESET}"
-echo -e "${BLUE}1. 🔥  Windows Server 2022      ${CYAN}- Edisi Terbaru untuk Server${RESET}"
-echo -e "${MAGENTA}2. 🔥  Windows Server 2019      ${CYAN}- Stabilitas dan Keamanan${RESET}"
-echo -e "${GREEN}3. 🔥  Windows Server 2016      ${CYAN}- Stabilitas dan Performa${RESET}"
+echo -e "${BLUE}1. 🔥  Windows Server 2025      ${CYAN}- Edisi Terbaru untuk Server${RESET}"
+echo -e "${MAGENTA}2. 🔥  Windows Server 2022      ${CYAN}- Stabilitas dan Keamanan${RESET}"
+echo -e "${GREEN}3. 🔥  Windows Server 2019      ${CYAN}- Stabilitas dan Performa${RESET}"
 echo -e "${YELLOW}4. 🔥  Windows 10 Pro           ${CYAN}- Windows 10 Spectre Profesional${RESET}"
 echo -e "${RED}5. 🔥  Windows 10 LTSC          ${CYAN}- Untuk Penggunaan minimalis${RESET}"
 echo -e "${MAGENTA}6. 🔥  Windows 11 Pro Micro     ${CYAN}- Windows 11 PRO Micro 24H2 XLite${RESET}"
@@ -31,8 +31,8 @@ read -p "Pilih Windows sesuai nomor (1-10): " GETOS
 
 # Tentukan password dan file berdasarkan input
 case "$GETOS" in
-    1) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="$location=2022servernew$files" ;;
-    2) PASSWORD="comingsoon"; GETOS="soon" ;;
+    1) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="$location=windows2025$files" ;;
+    2) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="$location=2022servernew$files" ;;
     3) PASSWORD="comingsoon"; GETOS="soon" ;;
     4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=WINDOWS10GHOSTSPECTRE$files" ;;
     5) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW10ltsc$files" ;;
