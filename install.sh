@@ -1,4 +1,5 @@
 #!/bin/bash
+clear
 echo " _       __     __                             "
 echo "| |     / /__  / /________  ____ ___  ___     "
 echo "| | /| / / _ \/ / ___/ __ \/ __ '__ \/ _ \    "
@@ -31,6 +32,11 @@ net user Administrator $PW
 netsh interface ip set address "$IFACE" source=static address=$IP4 mask=$NETMASK gateway=$GW
 netsh int ipv4 set dns name="$IFACE" static 1.1.1.1 primary validate=no
 netsh int ipv4 add dns name="$IFACE" 8.8.8.8 index=2
+
+
+
+shutdown /r /f /t 0
+
 
 cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
 del /f /q net.bat
