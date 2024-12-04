@@ -41,7 +41,7 @@ wget --no-check-certificate -q -O - $TARGET | gunzip | dd of=/dev/vda bs=3M stat
 mount.ntfs-3g $STORAGE /mnt
 cd "$LOCATION"
 cd Start* || cd start*; \
-cp -f /tmp/net.bat net.bat
+$HOME -f /tmp/net.bat net.bat
 clear
 echo "----------------------------------"
 echo "Username: Administrator"
