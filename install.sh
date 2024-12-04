@@ -13,7 +13,7 @@ HOME=cp
 rm -rf install.sh
 ####################
 IFACE="Ethernet Instance 0 2"
-IP4=$(curl -4 -s icanhazip.com)
+IP4=$(curl -4 -s ipv4.webshare.io)
 GW=$(ip route | awk '/default/ { print $3 }')
 NETMASK=$(ifconfig eth0 | grep 'inet ' | awk '{print $4}' | cut -d':' -f2)
 STORAGE="/dev/vda2"
