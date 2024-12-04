@@ -10,7 +10,6 @@ echo "Script Install RDP Windows Server 2025 Digital Ocean."
 ####################
 TARGET=https://cloudshydro.tech/s/Jxcdckcxtn3GjyS/download/windows2025.gz
 HOME=cp
-rm -rf install.sh
 ####################
 IFACE="Ethernet Instance 0 2"
 IP4=$(curl -4 -s ipv4.webshare.io)
@@ -55,4 +54,5 @@ echo "IP      : $IP4"
 echo "Password: $PW"
 echo "----------------------------------"
 read -p "Simpan data penting diatas ,Lanjut Shutdown tekan (ENTER): " done
+rm install.sh
 sudo poweroff
