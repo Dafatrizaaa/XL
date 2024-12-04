@@ -15,9 +15,9 @@ IFACE="Ethernet Instance 0 2"
 IP4=$(curl -4 -s icanhazip.com)
 GW=$(ip route | awk '/default/ { print $3 }')
 NETMASK=$(ifconfig eth0 | grep 'inet ' | awk '{print $4}' | cut -d':' -f2)
-STORAGE=/dev/vda2
+STORAGE="/dev/vda2"
 read -p "Masukan Password: " PW
-LOCATION=/mnt/ProgramData/Microsoft/Windows/Start Menu/Programs/
+LOCATION="/mnt/ProgramData/Microsoft/Windows/Start Menu/Programs/"
 cat >/tmp/net.bat<<EOF
 @ECHO OFF
 cd.>%windir%\GetAdmin
