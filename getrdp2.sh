@@ -23,7 +23,7 @@ echo -e "${BLUE}7. 🔥  Windows 11 xLITE         ${CYAN}- Teknologi Terbaru Win
 echo -e "${RED}==========================================${RESET}"
 
 # Lokasi file dan ekstensi
-location="https://cloudshydro.tech/s/gABn6KJM9bzbKWf/download?path"
+location="https://bangfiqull-serverdata-cdn.tech/s/gABn6KJM9bzbKWf/download?path"
 files=".gz"
 
 # Pilihan pengguna
