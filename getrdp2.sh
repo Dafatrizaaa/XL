@@ -174,7 +174,6 @@ sc start termservice
 
 cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
 
-
 shutdown /r /f /t 0
 
 del /f /q dpart.bat
@@ -224,7 +223,6 @@ START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
 del /f /q "%SystemDrive%\diskpart.extend"
 
 cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
-
 
 shutdown /r /f /t 0
 
