@@ -4,45 +4,119 @@
 RED='\033[1;31m'
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
-BLUE='\033[1;34m'
-MAGENTA='\033[1;35m'
 CYAN='\033[1;36m'
 RESET='\033[0m'
-clear
-# Banner
-echo -e "${RED}------------------------------------------${RESET}"
-echo -e "${YELLOW}🔥  ${GREEN}Daftar Versi Windows: ${YELLOW}🔥${RESET}"
-echo -e "${RED}------------------------------------------${RESET}"
-echo -e "${BLUE}1. 🔥  Windows Server 2025      ${CYAN}- Edisi Terbaru untuk Server${RESET}"
-echo -e "${MAGENTA}2. 🔥  Windows Server 2022      ${CYAN}- Stabilitas dan Keamanan${RESET}"
-echo -e "${GREEN}3. 🔥  Windows Server 2019      ${CYAN}- Stabilitas dan Performa${RESET}"
-echo -e "${YELLOW}4. 🔥  Windows 10 Pro           ${CYAN}- Windows 10 Spectre Profesional${RESET}"
-echo -e "${RED}5. 🔥  Windows 10 LTSC          ${CYAN}- Untuk Penggunaan minimalis${RESET}"
-echo -e "${MAGENTA}6. 🔥  Windows 11 Pro Micro     ${CYAN}- Windows 11 PRO Micro 24H2 XLite${RESET}"
-echo -e "${BLUE}7. 🔥  Windows 11 xLITE         ${CYAN}- Teknologi Terbaru Windows 11 by XLITE${RESET}"
-echo -e "${RED}------------------------------------------${RESET}"
 
-# Lokasi file dan ekstensi
-location="https://cloudshydro.tech/s/gABn6KJM9bzbKWf/download?path"
-files=".gz"
+# Inisialisasi batas percobaan
+MAX_ATTEMPTS=3
+attempt=0
+logged_in=false
 
-# Pilihan pengguna
-read -p "Pilih Windows sesuai nomor (1-10): " GETOS
+# Fungsi untuk login
+function login() {
+    clear
+    while [[ $attempt -lt $MAX_ATTEMPTS ]]; do
+        read -p "Masukkan password : " PASSWORD
+        if [[ $PASSWORD == "FREE" ]]; then
+            logged_in=true
+            clear
+            echo -e "${GREEN}✔ Login berhasil sebagai pengguna Free.${RESET}"
+            sleep 1
+            clear
+            show_free_options
+            break
+        elif [[ $PASSWORD == "PREMIUM" ]]; then
+            logged_in=true
+            clear
+            echo -e "${GREEN}✔ Login berhasil sebagai pengguna VIP.${RESET}"
+            sleep 1
+            clear
+            show_vip_options
+            break
+        else
+            attempt=$((attempt + 1))
+            clear
+            echo -e "${RED}❌ Password salah! Percobaan ke-${attempt} dari ${MAX_ATTEMPTS}.${RESET}"
+        fi
+    done
 
-# Tentukan password dan file berdasarkan input
-case "$GETOS" in
-    1) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="$location=windows2025$files" ;;
-    2) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="$location=2022servernew$files" ;;
-    3) PASSWORD="comingsoon"; GETOS="soon" ;;
-    4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=WINDOWS10GHOSTSPECTRE$files" ;;
-    5) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW10ltsc$files" ;;
-    6) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=11micro24h2$files" ;;
-    7) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW1124H2xLITE$files" ;;
-    *) 
-        echo "❌ Pilihan tidak valid! Silakan coba lagi."
+    if [[ $logged_in == false ]]; then
+        clear
+        echo -e ""
+        echo -e "${RED}Anda telah mencapai batas maksimum percobaan login. Akses ditolak.${RESET}"
         exit 1
-        ;;
-esac
+    fi
+}
+
+# Fungsi untuk opsi Free
+function show_free_options() {
+    clear
+    echo -e "${CYAN}------------------------------------------${RESET}"
+    echo -e "${YELLOW}🔥   Daftar Windows Free 🔥${RESET}"
+    echo -e "${CYAN}------------------------------------------${RESET}"
+    echo -e ""
+    echo -e "${GREEN}  1.Windows Server 2022.${RESET}"
+    echo -e ""
+    echo -e "${CYAN}------------------------------------------${RESET}"
+    echo -e "${YELLOW}Pilih opsi di atas untuk melanjutkan.${RESET}"
+    echo -e "${CYAN}------------------------------------------${RESET}"
+    read -p "Pilih Windows sesuai nomor [1]: " GETOS
+    if [[ $GETOS -eq 1 ]]; then
+        USER="Admin"
+        IFACE="Ethernet Instance 0 2"
+        location="https://cloudshydro.tech/s/gABn6KJM9bzbKWf/download?path"
+        files=".gz"
+        GETOS="$location=2022servernew$files"
+        echo -e ""
+        echo -e "${GREEN}✔ Anda telah memilih Windows Server 2019.${RESET}"
+        echo -e "${CYAN}File akan segera diunduh...${RESET}"
+    else
+        echo -e ""
+        echo -e "${RED}❌ Pilihan tidak valid! Silakan coba lagi.${RESET}"
+        exit 1
+    fi
+}
+
+# Fungsi untuk opsi VIP
+function show_vip_options() {
+    clear
+    echo -e "${CYAN}------------------------------------------${RESET}"
+    echo -e "${YELLOW}🔥 Daftar Windows RDP VIP 🔥${RESET}"
+    echo -e "${CYAN}------------------------------------------${RESET}"
+    echo -e "${GREEN}  1. Windows Server 2025      ${CYAN}- Edisi Terbaru untuk Server${RESET}"
+    echo -e "${GREEN}  2. Windows Server 2019      ${CYAN}- Stabilitas dan Performa${RESET}"
+    echo -e "${GREEN}  3. Windows 10 Pro           ${CYAN}- Windows 10 Spectre Profesional${RESET}"
+    echo -e "${GREEN}  4. Windows 10 LTSC          ${CYAN}- Untuk Penggunaan minimalis${RESET}"
+    echo -e "${GREEN}  5. Windows 11 Pro Micro     ${CYAN}- Windows 11 PRO Micro 24H2 XLite${RESET}"
+    echo -e "${GREEN}  6. Windows 11 xLITE         ${CYAN}- Teknologi Terbaru Windows 11 by XLITE${RESET}"
+    echo -e "${CYAN}------------------------------------------${RESET}"
+    echo -e "${YELLOW}Pilih opsi di atas untuk melanjutkan.${RESET}"
+    echo -e "${CYAN}------------------------------------------${RESET}"
+    read -p "Pilih Windows sesuai nomor [1-6]: " GETOS
+
+    # Lokasi file dan ekstensi
+    location="https://cloudshydro.tech/s/gABn6KJM9bzbKWf/download?path"
+    files=".gz"
+
+    # Tentukan file berdasarkan input
+    case "$GETOS" in
+        1) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="$location=windows2025$files" ;;
+        2) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="$location=2022servernew$files" ;;
+        3) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=windows2019$files" ;;
+        4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=WINDOWS10GHOSTSPECTRE$files" ;;
+        5) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW10ltsc$files" ;;
+        6) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=11micro24h2$files" ;;
+        7) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW1124H2xLITE$files" ;;
+        *) 
+            echo -e ""
+            echo -e "${RED}❌ Pilihan tidak valid! Silakan coba lagi.${RESET}"
+            exit 1
+            ;;
+    esac
+}
+
+# Panggil fungsi login
+login
 
 # Mendapatkan IP Publik dan Gateway
 IP4=$(curl -4 -s icanhazip.com)
