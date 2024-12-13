@@ -48,6 +48,8 @@ esac
 IP4=$(curl -4 -s icanhazip.com)
 GW=$(ip route | awk '/default/ { print $3 }')
 NETMASK=$(ifconfig eth0 | grep 'inet ' | awk '{print $4}' | cut -d':' -f2)
+DNSONE=67.207.67.3
+DNSTWO=67.207.67.2
 
 read -p $'\e[35mApakah Anda ingin membuat username atau default(n)? Y/n: \e[0m' choice
 if [[ "$choice" == "Y" || "$choice" == "y" ]]; then
@@ -76,8 +78,8 @@ set OldUser=$USER
 net user %OldUser% /delete
 
 netsh interface ip set address "$IFACE" source=static address=$IP4 mask=$NETMASK gateway=$GW
-netsh int ipv4 set dns name="$IFACE" static 1.1.1.1 primary validate=no
-netsh int ipv4 add dns name="$IFACE" 8.8.8.8 index=2
+netsh int ipv4 set dns name="$IFACE" static $DNSONE primary validate=no
+netsh int ipv4 add dns name="$IFACE" $DNSTWO index=2
 
 cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
 del /f /q net.bat
@@ -100,8 +102,8 @@ exit /b 2)
 net user $USER $password
 
 netsh interface ip set address "$IFACE" source=static address=$IP4 mask=$NETMASK gateway=$GW
-netsh int ipv4 set dns name="$IFACE" static 1.1.1.1 primary validate=no
-netsh int ipv4 add dns name="$IFACE" 8.8.8.8 index=2
+netsh int ipv4 set dns name="$IFACE" static $DNSONE primary validate=no
+netsh int ipv4 add dns name="$IFACE" $DNSTWO index=2
 
 cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
 del /f /q net.bat
@@ -248,6 +250,10 @@ echo -e "${RED}🔑Information!!, Simpan Ini.${RESET}"
 echo -e "${RED}Username${RESET} : $NUSER"
 echo -e "${RED}Password${RESET} : $password"
 echo -e "${RED}IP${RESET}       : $IP4"
+echo -e "${RED}Netmask${RESET}  : $NETMASK"
+echo -e "${RED}Gateway${RESET}  : $GW"
+echo -e "${RED}DNS 1${RESET}    : $DNSONE"
+echo -e "${RED}DNS 2${RESET}    : $DNSTWO"
 echo -e "${RED}PORT RDP${RESET} : $PORT"
 echo -e "${RED}Username default${RESET} : $USER"
 echo -e "${RED}----------------------------------------------------${RESET}"
