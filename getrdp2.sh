@@ -16,7 +16,7 @@ logged_in=false
 function login() {
     clear
     while [[ $attempt -lt $MAX_ATTEMPTS ]]; do
-        read -p "Masukkan password : " PASSWORD
+        read -s -p "Masukkan password : " PASSWORD
         if [[ $PASSWORD == "FREE" ]]; then
             logged_in=true
             clear
