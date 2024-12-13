@@ -10,9 +10,9 @@ CYAN='\033[1;36m'
 RESET='\033[0m'
 clear
 # Banner
-echo -e "${RED}==========================================${RESET}"
+echo -e "${RED}------------------------------------------${RESET}"
 echo -e "${YELLOW}🔥  ${GREEN}Daftar Versi Windows: ${YELLOW}🔥${RESET}"
-echo -e "${RED}==========================================${RESET}"
+echo -e "${RED}------------------------------------------${RESET}"
 echo -e "${BLUE}1. 🔥  Windows Server 2025      ${CYAN}- Edisi Terbaru untuk Server${RESET}"
 echo -e "${MAGENTA}2. 🔥  Windows Server 2022      ${CYAN}- Stabilitas dan Keamanan${RESET}"
 echo -e "${GREEN}3. 🔥  Windows Server 2019      ${CYAN}- Stabilitas dan Performa${RESET}"
@@ -20,7 +20,7 @@ echo -e "${YELLOW}4. 🔥  Windows 10 Pro           ${CYAN}- Windows 10 Spectre 
 echo -e "${RED}5. 🔥  Windows 10 LTSC          ${CYAN}- Untuk Penggunaan minimalis${RESET}"
 echo -e "${MAGENTA}6. 🔥  Windows 11 Pro Micro     ${CYAN}- Windows 11 PRO Micro 24H2 XLite${RESET}"
 echo -e "${BLUE}7. 🔥  Windows 11 xLITE         ${CYAN}- Teknologi Terbaru Windows 11 by XLITE${RESET}"
-echo -e "${RED}==========================================${RESET}"
+echo -e "${RED}------------------------------------------${RESET}"
 
 # Lokasi file dan ekstensi
 location="https://cloudshydro.tech/s/gABn6KJM9bzbKWf/download?path"
