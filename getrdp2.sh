@@ -1,17 +1,14 @@
 #!/bin/bash
-
 # Definisi warna ANSI
 RED='\033[1;31m'
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 CYAN='\033[1;36m'
 RESET='\033[0m'
-
 # Inisialisasi batas percobaan
 MAX_ATTEMPTS=3
 attempt=0
 logged_in=false
-
 # Fungsi untuk login
 function login() {
     clear
@@ -39,7 +36,6 @@ function login() {
             echo -e "${RED}❌ Password salah! Percobaan ke-${attempt} dari ${MAX_ATTEMPTS}.${RESET}"
         fi
     done
-
     if [[ $logged_in == false ]]; then
         clear
         echo -e ""
@@ -47,7 +43,6 @@ function login() {
         exit 1
     fi
 }
-
 # Fungsi untuk opsi Free
 function show_free_options() {
     clear
@@ -68,15 +63,13 @@ function show_free_options() {
         files=".gz"
         GETOS="$location=2022servernew$files"
         echo -e ""
-        echo -e "${GREEN}✔ Anda telah memilih Windows Server 2019.${RESET}"
-        echo -e "${CYAN}File akan segera diunduh...${RESET}"
+        echo -e "${GREEN}✔ Anda telah memilih Windows Server 2022.${RESET}"
     else
         echo -e ""
         echo -e "${RED}❌ Pilihan tidak valid! Silakan coba lagi.${RESET}"
         exit 1
     fi
 }
-
 # Fungsi untuk opsi VIP
 function show_vip_options() {
     clear
@@ -93,11 +86,9 @@ function show_vip_options() {
     echo -e "${YELLOW}Pilih opsi di atas untuk melanjutkan.${RESET}"
     echo -e "${CYAN}------------------------------------------${RESET}"
     read -p "Pilih Windows sesuai nomor [1-6]: " GETOS
-
     # Lokasi file dan ekstensi
     location="https://cloudshydro.tech/s/gABn6KJM9bzbKWf/download?path"
     files=".gz"
-
     # Tentukan file berdasarkan input
     case "$GETOS" in
         1) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="$location=windows2025$files" ;;
@@ -114,17 +105,14 @@ function show_vip_options() {
             ;;
     esac
 }
-
 # Panggil fungsi login
 login
-
 # Mendapatkan IP Publik dan Gateway
 IP4=$(curl -4 -s icanhazip.com)
 GW=$(ip route | awk '/default/ { print $3 }')
 NETMASK=$(ifconfig eth0 | grep 'inet ' | awk '{print $4}' | cut -d':' -f2)
 DNSONE=67.207.67.3
 DNSTWO=67.207.67.2
-
 read -p $'\e[35mApakah Anda ingin membuat username atau default(n)? Y/n: \e[0m' choice
 if [[ "$choice" == "Y" || "$choice" == "y" ]]; then
     read -p $'\e[35mMasukkan username : \e[0m' NUSER
@@ -198,11 +186,9 @@ if [ $? -ne 0 ]; then
 else
   echo "Koneksi internet tersedia."
 fi
-
 echo -e "${RED}Tunggu hingga prosses selesai...${RESET}"
 # Download dan Instal OS dari URL
 wget --no-check-certificate -q -O - $GETOS | gunzip | dd of=/dev/vda bs=3M status=progress
-
 read -p $'\033[0;35mApakah Anda ingin mengunakan port RDP (y/n): \033[0m' pilihan
 if [ "$pilihan" == "y" ]; then
     read -p "Masukkan PORT RDP (tekan Enter untuk port acak): " PORT
@@ -264,7 +250,6 @@ cd "/mnt/ProgramData/Microsoft/Windows/Start Menu/Programs/"
 cd Start* || cd start*; \
 cp -f /tmp/net.bat net.bat
 cp -f /tmp/dpart.bat dpart.bat
-
 elif [ "$pilihan" == "n" ]; then
      PORT=NO_PORT!
      cat >/tmp/dpart.bat<<EOF
@@ -315,7 +300,6 @@ cd Start* || cd start*; \
 cp -f /tmp/net.bat net.bat
 cp -f /tmp/dpart.bat dpart.bat
 fi
-
 # Tampilkan password sebelum mengunduh
 clear
 echo ""
