@@ -320,6 +320,7 @@ echo "Terima kasih telah menggunakan script ini! 🙏"
 echo ""
 echo ""
 echo "👉 Setelah selesai, kembali ke mode Hard Drive."
-echo "VPS DIMATIKAN..."
-sleep 3
+echo "Pastikan Simpan data yang PENTING diatas."
+echo ""
+read -p "Tekan [ENTER] untuk Shutdown VPS: " done
 sudo poweroff
