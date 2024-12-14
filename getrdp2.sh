@@ -1,28 +1,38 @@
 #!/bin/bash
-# Definisi warna ANSI
 RED='\033[1;31m'
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 CYAN='\033[1;36m'
 RESET='\033[0m'
-# Inisialisasi batas percobaan
 MAX_ATTEMPTS=3
 attempt=0
 logged_in=false
-# Fungsi untuk login
+function generate_coupon() {
+    PART1=$(tr -dc '0-9' < /dev/urandom | head -c 4)
+    PART2=$(tr -dc 'A-Z0-9' < /dev/urandom | head -c 6)
+    PART3=$(tr -dc '0-9' < /dev/urandom | head -c 4)
+    PART4=$(tr -dc 'A-Z0-9' < /dev/urandom | head -c 6)
+    COUPON="${PART1}-${PART2}-${PART3}-${PART4}"
+    echo "$COUPON"
+}
+FREE_COUPON=$(generate_coupon)
 function login() {
     clear
+    echo -e "${CYAN}Selamat datang!${RESET}"
+    echo -e "Gunakan kode berikut untuk akses Gratis RDP:"
+    echo -e "${YELLOW}Kode: ${FREE_COUPON}${RESET}"
+    echo -e ""
     while [[ $attempt -lt $MAX_ATTEMPTS ]]; do
-        read -s -p "Masukkan password : " PASSWORD
-        if [[ $PASSWORD == "FREE" ]]; then
+        read -p "Masukkan kode: " PASSWORD
+        if [[ $PASSWORD == "$FREE_COUPON" ]]; then
             logged_in=true
             clear
-            echo -e "${GREEN}✔ Login berhasil sebagai pengguna Free.${RESET}"
+            echo -e "${GREEN}✔ Login berhasil sebagai pengguna Gratiss.${RESET}"
             sleep 1
             clear
             show_free_options
             break
-        elif [[ $PASSWORD == "PREMIUM" ]]; then
+        elif [[ $PASSWORD == "PREMIUMM" ]]; then
             logged_in=true
             clear
             echo -e "${GREEN}✔ Login berhasil sebagai pengguna VIP.${RESET}"
@@ -33,12 +43,11 @@ function login() {
         else
             attempt=$((attempt + 1))
             clear
-            echo -e "${RED}❌ Password salah! Percobaan ke-${attempt} dari ${MAX_ATTEMPTS}.${RESET}"
+            echo -e "${RED}❌ Kode salah! Percobaan ke-${attempt} dari ${MAX_ATTEMPTS}.${RESET}"
         fi
     done
     if [[ $logged_in == false ]]; then
         clear
-        echo -e ""
         echo -e "${RED}Anda telah mencapai batas maksimum percobaan login. Akses ditolak.${RESET}"
         exit 1
     fi
