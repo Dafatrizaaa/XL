@@ -66,7 +66,7 @@ function show_free_options() {
     echo -e "${CYAN}------------------------------------------${RESET}"
     read -p "Pilih Windows sesuai nomor [1]: " GETOS
     if [[ $GETOS -eq 1 ]]; then
-        USER="Admin"
+        USER="Administrator"
         IFACE="Ethernet Instance 0 2"
         location="https://cloudshydro.tech/s/gABn6KJM9bzbKWf/download?path"
         files=".gz"
