@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# Pastikan skrip dijalankan dengan sudo
+if [[ $EUID -ne 0 ]]; then
+   echo "Skrip ini harus dijalankan sebagai root."
+   exit 1
+fi
+
+# Lokasi file konfigurasi SSH
+SSH_CONFIG="/etc/ssh/sshd_config"
+
+# Meminta input dari pengguna
+read -p "Masukkan nama user baru: " NEW_USER
+read -p "Masukkan password untuk $NEW_USER: " NEW_PASSWORD
+read -p "Masukkan port SSH baru (contoh: 2222): " NEW_PORT
+
+# Tambahkan user baru
+if ! id -u "$NEW_USER" > /dev/null 2>&1; then
+    useradd -m -s /bin/bash "$NEW_USER"
+    echo "$NEW_USER:$NEW_PASSWORD" | chpasswd
+    echo "User $NEW_USER berhasil dibuat."
+else
+    echo "User $NEW_USER sudah ada, tidak dibuat ulang."
+fi
+
+# Backup file konfigurasi SSH
+if [ -f "$SSH_CONFIG" ]; then
+    cp "$SSH_CONFIG" "${SSH_CONFIG}.bak"
+    echo "Backup file konfigurasi SSH dibuat: ${SSH_CONFIG}.bak"
+else
+    echo "File konfigurasi SSH tidak ditemukan."
+    exit 1
+fi
+
+# Ubah port SSH dan matikan login root
+sed -i "s/^#Port .*/Port $NEW_PORT/" "$SSH_CONFIG"
+sed -i "s/^Port .*/Port $NEW_PORT/" "$SSH_CONFIG"
+sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/" "$SSH_CONFIG"
+sed -i "s/^PermitRootLogin.*/PermitRootLogin no/" "$SSH_CONFIG"
+
+# Pastikan konfigurasi SSH memiliki pengaturan yang benar
+grep -q "PermitRootLogin no" "$SSH_CONFIG" || echo "PermitRootLogin no" >> "$SSH_CONFIG"
+
+# Restart layanan SSH berdasarkan nama yang tersedia
+if systemctl list-units --type=service | grep -q sshd; then
+    systemctl restart sshd
+elif systemctl list-units --type=service | grep -q ssh; then
+    systemctl restart ssh
+else
+    echo "Layanan SSH tidak ditemukan. Pastikan OpenSSH terinstal."
+    exit 1
+fi
+
+# Perbarui aturan firewall (opsional)
+if command -v ufw > /dev/null 2>&1; then
+    ufw allow "$NEW_PORT"
+    ufw delete allow 22
+    ufw reload
+    echo "Aturan firewall diperbarui."
+fi
+
+# Informasi akhir
+echo "Konfigurasi selesai."
+echo "Login root telah dinonaktifkan."
+echo "SSH sekarang menggunakan port $NEW_PORT."
+echo "User $NEW_USER dapat login dengan password yang telah Anda tetapkan."
+reboot
