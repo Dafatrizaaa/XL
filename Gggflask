@@ -1,0 +1,341 @@
+#!/bin/bash
+
+# Pastikan script dijalankan dengan hak akses root
+if [[ $EUID -ne 0 ]]; then
+    echo "Script ini harus dijalankan dengan sudo atau root" 
+    exit 1
+fi
+  BASE="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#@*@*"
+echo "Memulai instalasi dan konfigurasi HTTPS untuk aplikasi Flask."
+
+# Install update dan paket yang dibutuhkan
+apt update
+apt install -y nginx python3-venv python3-pip certbot python3-certbot-nginx
+sudo apt install mariadb-server mariadb-client -y
+sudo apt install libmariadb-dev
+clear
+# database create
+echo "Create database : "
+read -p "Masukkan nama database untuk Nextcloud: " DB_NAME
+read -p "Masukkan username database: " DB_USER
+read -sp "Masukkan password untuk user database: " DB_PASS
+
+# Check if the database exists
+DB_EXIST=$(mysql -e "SHOW DATABASES LIKE '$DB_NAME';")
+if [ -z "$DB_EXIST" ]; then
+    mysql -e "CREATE DATABASE $DB_NAME;"
+    echo "Database $DB_NAME created"
+else
+    echo "Database $DB_NAME already exists"
+fi
+
+# Check if the user exists
+USER_EXIST=$(mysql -e "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '$DB_USER');")
+if [ "$USER_EXIST" == 0 ]; then
+    mysql -e "CREATE USER '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASS';"
+    echo "User $DB_USER created"
+else
+    echo "User $DB_USER already exists"
+fi
+
+mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'localhost';"
+mysql -e "FLUSH PRIVILEGES;"
+
+# Membaca domain dari pengguna
+read -p "Masukkan nama domain Anda (misalnya example.com): " DOMAIN
+read -p "Masukan Port akses Web Upload: " PORT
+  KEY_LENGTH=34
+  SECRET_KEY=""
+
+  for (( i=0; i<$KEY_LENGTH; i++ )); do
+    # Pilih karakter acak dari CHARACTERS
+    RANDOM_CHAR=${BASE:RANDOM%${#BASE}:1}
+    SECRET_KEY+=$RANDOM_CHAR
+  done
+IP4=$(curl -4 -s icanhazip.com)
+# Membuat kode unik dengan angka dan huruf
+part1=$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c 4)
+part2=$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c 4)
+part3=$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c 5)
+part4=$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c 4)
+part5=$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c 5)
+# Menggabungkan kode sesuai format
+CODE="$part1-$part2-$part3-$part4-$part5"
+# Membuat file konfigurasi Nginx
+echo "Membuat konfigurasi Nginx untuk domain $DOMAIN"
+
+cat <<EOF > /etc/nginx/sites-available/web
+server {
+    listen 80;
+    server_name $DOMAIN www.$DOMAIN;
+
+    location / {
+        proxy_pass http://$IP4:$PORT;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+    }
+}
+EOF
+sleep 3
+sudo ln -s /etc/nginx/sites-available/web /etc/nginx/sites-enabled/
+NGINX_CONF="/etc/nginx/nginx.conf"
+if [ ! -f "$NGINX_CONF" ]; then
+  exit 1
+fi
+cp $NGINX_CONF ${NGINX_CONF}.bak
+# Tambahkan konfigurasi client_max_body_size 10G; dalam blok http
+sed -i '/http {/a client_max_body_size 10G;' $NGINX_CONF
+#
+sudo nginx -t
+sudo systemctl reload nginx
+# Menjalankan Certbot untuk mendapatkan sertifikat SSL
+echo "Memulai proses mendapatkan sertifikat SSL untuk $DOMAIN"
+certbot --nginx -d $DOMAIN -d www.$DOMAIN
+# Memberikan informasi untuk mengaktifkan pembaruan otomatis sertifikat
+echo "Menyiapkan pembaruan otomatis sertifikat SSL."
+systemctl enable certbot.timer
+
+# Restart Nginx lagi untuk menerapkan pengalihan
+systemctl restart nginx
+
+echo "Selesai! Situs $DOMAIN sekarang dapat diakses menggunakan HTTPS."
+echo "Melanjutkan Configurasi Web Upload..."
+sleep 3
+# Create a virtual environment using python3
+echo "Creating virtual environment..."
+python3 -m venv venv
+sleep 3
+# Activate the virtual environment
+echo "Activating virtual environment..."
+source venv/bin/activate
+sleep 3
+# Create a requirements.txt file with necessary dependencies
+echo "Creating requirements.txt..."
+echo "flask" > requirements.txt
+echo "flask-login" >> requirements.txt
+echo "werkzeug" >> requirements.txt
+# mariadb pip
+pip install mariadb
+# Install dependencies from requirements.txt
+echo "Installing dependencies..."
+pip install -r requirements.txt
+
+echo "Membuat Templates..."
+sleep 2
+mkdir templates
+echo "Selesai membuat Templates.."
+mv webuploads/login.html ~/templates/
+mv webuploads/dashboard.html ~/templates/
+mv webuploads/register.html ~/templates/
+sleep 1
+cat <<EOF > app.py
+import os
+import mariadb
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory, flash
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from werkzeug.utils import secure_filename
+
+# Konfigurasi Flask
+app = Flask(__name__)
+app.secret_key = "$SECRET_KEY"
+
+# Konfigurasi folder upload
+UPLOAD_FOLDER = 'uploads'
+TEMPLATES_FOLDER = 'templates'
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Ekstensi file yang diizinkan
+ALLOWED_EXTENSIONS = {'html', 'zip', 'rar', 'iso', 'img', 'avi', 'svg', 'sh', 'gz', 'mp3', 'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'mp4', 'mkv'}
+
+#code
+REGISTER_CODE = "$CODE"
+# Login manager setup
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+
+# MariaDB configuration
+def get_db_connection():
+    return mariadb.connect(
+        user="$DB_USER",
+        password="$DB_PASS",
+        host="localhost",
+        port=3306,
+        database="DB_NAME"
+    )
+
+class User(UserMixin):
+    def __init__(self, id):
+        self.id = id
+
+@login_manager.user_loader
+def load_user(user_id):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT username FROM users WHERE id = ?", (user_id,))
+    row = cur.fetchone()
+    conn.close()
+    if row:
+        return User(user_id)
+    return None
+
+# Fungsi untuk memeriksa ekstensi file
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# Rute untuk login
+@app.route('/')
+def home():
+    return redirect(url_for('login'))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT id, password FROM users WHERE username = ?", (username,))
+        row = cur.fetchone()
+        conn.close()
+        if row and row[1] == password:
+            user = User(row[0])
+            login_user(user)
+            return redirect(url_for('dashboard'))
+        else:
+            flash('Invalid username or password', 'danger')
+    return render_template('login.html')
+
+# Rute untuk pendaftaran
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        code = request.form['code']
+
+        if code != REGISTER_CODE:
+            flash('❌ Registration code salah.', 'dangercode')
+            return redirect(url_for('register'))
+
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT username FROM users WHERE username = ?", (username,))
+        if cur.fetchone():
+            flash('❗Username sudah ada.', 'warninguser')
+        else:
+            cur.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+            conn.commit()
+            flash('✅ Registrasi akun berhasil.', 'successreg')
+            os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'], username))
+        conn.close()
+
+    return render_template('register.html')
+
+# Rute untuk dashboard
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    user_dir = os.path.join(app.config['UPLOAD_FOLDER'], current_user.id)
+    files = os.listdir(user_dir) if os.path.exists(user_dir) else []
+    return render_template('dashboard.html', files=files)
+
+# Rute untuk mengunggah file
+@app.route('/upload', methods=['POST'])
+@login_required
+def upload_file():
+    if 'file' not in request.files:
+        flash('No file part in the request', 'danger')
+        return redirect(url_for('dashboard'))
+    file = request.files['file']
+    if file.filename == '':
+        flash('No selected file', 'warning')
+        return redirect(url_for('dashboard'))
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        user_dir = os.path.join(app.config['UPLOAD_FOLDER'], current_user.id)
+        if not os.path.exists(user_dir):
+            os.makedirs(user_dir)
+        try:
+            file.save(os.path.join(user_dir, filename))
+            flash('File successfully uploaded', 'success')
+        except Exception as e:
+            flash(f'File upload failed: {str(e)}', 'danger')
+        return redirect(url_for('dashboard'))
+    else:
+        flash('File type not allowed', 'danger')
+        return redirect(url_for('dashboard'))
+
+# Rute untuk mengunduh file
+@app.route('/get/<filename>')
+@login_required
+def download_file(filename):
+    user_dir = os.path.join(app.config['UPLOAD_FOLDER'], current_user.id)
+    return send_from_directory(user_dir, filename)
+
+# Rute untuk menghapus file
+@app.route('/delete/<filename>', methods=['POST'])
+@login_required
+def delete_file(filename):
+    user_dir = os.path.join(app.config['UPLOAD_FOLDER'], current_user.id)
+    file_path = os.path.join(user_dir, filename)
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        flash('File successfully deleted', 'success')
+    else:
+        flash('File not found', 'danger')
+    return redirect(url_for('dashboard'))
+
+# Rute untuk mengedit file
+@app.route('/edit/<filename>', methods=['GET', 'POST'])
+@login_required
+def edit_file(filename):
+    user_dir = os.path.join(app.config['UPLOAD_FOLDER'], current_user.id)
+    file_path = os.path.join(user_dir, filename)
+    if request.method == 'POST':
+        content = request.form['content']
+        with open(file_path, 'w') as file:
+            file.write(content)
+        flash('File successfully updated', 'success')
+        return redirect(url_for('dashboard'))
+    else:
+        if os.path.exists(file_path):
+            with open(file_path, 'r') as file:
+                content = file.read()
+            return render_template('edit_file.html', filename=filename, content=content)
+        else:
+            flash('File not found', 'danger')
+            return redirect(url_for('dashboard'))
+
+# Rute untuk logout
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=$PORT, debug=True)
+EOF
+sleep 2
+clear
+# Run the Flask app
+echo "----------------------------------"
+echo ""
+echo "Domain : https://$DOMAIN"
+echo "Your Screet Key : $SECRET_KEY"
+echo "Your Code Register : $CODE"
+echo ""
+echo "----------------------------------"
+cat <<EOF > .web_upload
+Screet Key: $SECRET_KEY
+Code Register: $CODE
+EOF
+echo "Data sudah disimpan di .web_upload"
+echo "Running Web uploads..."
+rm -rf webuploads
+python3 app.py
