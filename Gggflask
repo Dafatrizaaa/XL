@@ -15,31 +15,31 @@ sudo apt install mariadb-server mariadb-client -y
 sudo apt install libmariadb-dev
 clear
 # database create
-echo "Create database : "
-read -p "Masukkan nama database untuk Nextcloud: " DB_NAME
-read -p "Masukkan username database: " DB_USER
-read -sp "Masukkan password untuk user database: " DB_PASS
+read -p "Masukan USER database: " DB_USER
+read -p "Masukan PASSWORD database: " DB_PASS
+read -p "Masukan NAMA database: " DB_NAME
 
-# Check if the database exists
-DB_EXIST=$(mysql -e "SHOW DATABASES LIKE '$DB_NAME';")
-if [ -z "$DB_EXIST" ]; then
-    mysql -e "CREATE DATABASE $DB_NAME;"
-    echo "Database $DB_NAME created"
-else
-    echo "Database $DB_NAME already exists"
-fi
+sudo mysql -e "CREATE DATABASE $DB_NAME;"
+sudo mysql -e "CREATE USER '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASS';"
+sudo mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'localhost';"
+sudo mysql -e "FLUSH PRIVILEGES;"
 
-# Check if the user exists
-USER_EXIST=$(mysql -e "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '$DB_USER');")
-if [ "$USER_EXIST" == 0 ]; then
-    mysql -e "CREATE USER '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASS';"
-    echo "User $DB_USER created"
-else
-    echo "User $DB_USER already exists"
-fi
+sudo mysql -D $DB_NAME -e "
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL
+);
+CREATE TABLE uploads (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    filename VARCHAR(255) NOT NULL,
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+"
 
-mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'localhost';"
-mysql -e "FLUSH PRIVILEGES;"
+echo "Database dan tabel berhasil dibuat."
 
 # Membaca domain dari pengguna
 read -p "Masukkan nama domain Anda (misalnya example.com): " DOMAIN
