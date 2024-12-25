@@ -99,19 +99,18 @@ function show_vip_options() {
     echo -e "${GREEN}  3. Windows 10 Pro           ${CYAN}- Windows 10 Spectre Profesional${RESET}"
     echo -e "${GREEN}  4. Windows 10 LTSC          ${CYAN}- Untuk Penggunaan minimalis${RESET}"
     echo -e "${GREEN}  5. Windows 11 Pro Micro     ${CYAN}- Windows 11 PRO Micro 24H2 XLite${RESET}"
-    echo -e "${GREEN}  6. Windows 11 xLITE         ${CYAN}- Teknologi Terbaru Windows 11 by XLITE${RESET}"
     echo -e "${CYAN}------------------------------------------${RESET}"
     echo -e "${YELLOW}Pilih opsi di atas untuk melanjutkan.${RESET}"
     echo -e "${CYAN}------------------------------------------${RESET}"
-    read -p "Pilih Windows sesuai nomor [1-6]: " GETOS
+    read -p "Pilih Windows sesuai nomor [1-5]: " GETOS
     location="https://cloudshydro.tech/s/gABn6KJM9bzbKWf/download?path"
     files=".gz"
     case "$GETOS" in
         1) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="$location=windows2025$files" ;;
-        2) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="$location=2022servernew$files" ;;
-        3) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=windows2019$files" ;;
-        4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=WINDOWS10GHOSTSPECTRE$files" ;;
-        5) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW10ltsc$files" ;;
+        2) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="$location=windows2019$files" ;;
+        3) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=WINDOWS10GHOSTSPECTRE$files" ;;
+        4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW10ltsc$files" ;;
+        5) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=11micro24h2$files" ;;
         6) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=11micro24h2$files" ;;
         *) 
             echo -e ""
