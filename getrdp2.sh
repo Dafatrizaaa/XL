@@ -1,4 +1,5 @@
 #!/bin/bash
+
 RED='\033[1;31m'
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
@@ -7,6 +8,15 @@ RESET='\033[0m'
 MAX_ATTEMPTS=3
 attempt=0
 logged_in=false
+
+# Check if the login code is passed as an argument
+if [ -z "$1" ]; then
+    echo -e "${RED}Kode login tidak disertakan dalam argumen. Harap sertakan kode login.${RESET}"
+    exit 1
+fi
+
+LOGIN_CODE=$1
+
 function generate_coupon() {
     PART1=$(tr -dc '0-9' < /dev/urandom | head -c 4)
     PART2=$(tr -dc 'A-Z0-9' < /dev/urandom | head -c 6)
@@ -16,42 +26,35 @@ function generate_coupon() {
     echo "$COUPON"
 }
 FREE_COUPON=$(generate_coupon)
+
 function login() {
     clear
     echo -e "${CYAN}Selamat datang!${RESET}"
     echo -e "Gunakan kode berikut untuk akses Gratis RDP:"
     echo -e "${YELLOW}Kode: ${FREE_COUPON}${RESET}"
     echo -e ""
-    while [[ $attempt -lt $MAX_ATTEMPTS ]]; do
-        read -p "Masukkan kode: " PASSWORD
-        if [[ $PASSWORD == "$FREE_COUPON" ]]; then
-            logged_in=true
-            clear
-            echo -e "${GREEN}✔ Login berhasil sebagai pengguna Gratiss.${RESET}"
-            sleep 1
-            clear
-            show_free_options
-            break
-        elif [[ $PASSWORD == "PREMIUMM" ]]; then
-            logged_in=true
-            clear
-            echo -e "${GREEN}✔ Login berhasil sebagai pengguna VIP.${RESET}"
-            sleep 1
-            clear
-            show_vip_options
-            break
-        else
-            attempt=$((attempt + 1))
-            clear
-            echo -e "${RED}❌ Kode salah! Percobaan ke-${attempt} dari ${MAX_ATTEMPTS}.${RESET}"
-        fi
-    done
-    if [[ $logged_in == false ]]; then
+
+    if [[ $LOGIN_CODE == "$FREE_COUPON" ]]; then
+        logged_in=true
         clear
-        echo -e "${RED}Anda telah mencapai batas maksimum percobaan login. Akses ditolak.${RESET}"
+        echo -e "${GREEN}✔ Login berhasil sebagai pengguna Gratiss.${RESET}"
+        sleep 1
+        clear
+        show_free_options
+    elif [[ $LOGIN_CODE == "PREMIUMM" ]]; then
+        logged_in=true
+        clear
+        echo -e "${GREEN}✔ Login berhasil sebagai pengguna VIP.${RESET}"
+        sleep 1
+        clear
+        show_vip_options
+    else
+        clear
+        echo -e "${RED}❌ Kode salah! Akses ditolak.${RESET}"
         exit 1
     fi
 }
+
 # Fungsi untuk opsi Free
 function show_free_options() {
     clear
@@ -79,6 +82,7 @@ function show_free_options() {
         exit 1
     fi
 }
+
 # Fungsi untuk opsi VIP
 function show_vip_options() {
     clear
@@ -95,10 +99,8 @@ function show_vip_options() {
     echo -e "${YELLOW}Pilih opsi di atas untuk melanjutkan.${RESET}"
     echo -e "${CYAN}------------------------------------------${RESET}"
     read -p "Pilih Windows sesuai nomor [1-6]: " GETOS
-    # Lokasi file dan ekstensi
     location="https://cloudshydro.tech/s/gABn6KJM9bzbKWf/download?path"
     files=".gz"
-    # Tentukan file berdasarkan input
     case "$GETOS" in
         1) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="$location=windows2025$files" ;;
         2) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="$location=2022servernew$files" ;;
@@ -106,7 +108,6 @@ function show_vip_options() {
         4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=WINDOWS10GHOSTSPECTRE$files" ;;
         5) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW10ltsc$files" ;;
         6) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=11micro24h2$files" ;;
-        7) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW1124H2xLITE$files" ;;
         *) 
             echo -e ""
             echo -e "${RED}❌ Pilihan tidak valid! Silakan coba lagi.${RESET}"
@@ -114,8 +115,11 @@ function show_vip_options() {
             ;;
     esac
 }
+
 # Panggil fungsi login
 login
+
+# Lanjutkan dengan sisa skrip...
 # Mendapatkan IP Publik dan Gateway
 IP4=$(curl -4 -s icanhazip.com)
 GW=$(ip route | awk '/default/ { print $3 }')
