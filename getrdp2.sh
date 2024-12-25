@@ -9,14 +9,7 @@ MAX_ATTEMPTS=3
 attempt=0
 logged_in=false
 
-# Check if the login code is passed as an argument
-if [ -z "$1" ]; then
-    echo -e "${RED}Kode login tidak disertakan dalam argumen. Harap sertakan kode login.${RESET}"
-    exit 1
-fi
-
-LOGIN_CODE=$1
-
+# Function to generate coupon
 function generate_coupon() {
     PART1=$(tr -dc '0-9' < /dev/urandom | head -c 4)
     PART2=$(tr -dc 'A-Z0-9' < /dev/urandom | head -c 6)
@@ -27,6 +20,7 @@ function generate_coupon() {
 }
 FREE_COUPON=$(generate_coupon)
 
+# Function for login
 function login() {
     clear
     echo -e "${CYAN}Selamat datang!${RESET}"
@@ -34,23 +28,34 @@ function login() {
     echo -e "${YELLOW}Kode: ${FREE_COUPON}${RESET}"
     echo -e ""
 
-    if [[ $LOGIN_CODE == "$FREE_COUPON" ]]; then
-        logged_in=true
+    while [[ $attempt -lt $MAX_ATTEMPTS ]]; do
+        read -p "Masukkan kode: " PASSWORD
+        if [[ $PASSWORD == "$FREE_COUPON" ]]; then
+            logged_in=true
+            clear
+            echo -e "${GREEN}✔ Login berhasil sebagai pengguna Gratiss.${RESET}"
+            sleep 1
+            clear
+            show_free_options
+            break
+        elif [[ $PASSWORD == "PREMIUMM" ]]; then
+            logged_in=true
+            clear
+            echo -e "${GREEN}✔ Login berhasil sebagai pengguna VIP.${RESET}"
+            sleep 1
+            clear
+            show_vip_options
+            break
+        else
+            attempt=$((attempt + 1))
+            clear
+            echo -e "${RED}❌ Kode salah! Percobaan ke-${attempt} dari ${MAX_ATTEMPTS}.${RESET}"
+        fi
+    done
+
+    if [[ $logged_in == false ]]; then
         clear
-        echo -e "${GREEN}✔ Login berhasil sebagai pengguna Gratiss.${RESET}"
-        sleep 1
-        clear
-        show_free_options
-    elif [[ $LOGIN_CODE == "PREMIUMM" ]]; then
-        logged_in=true
-        clear
-        echo -e "${GREEN}✔ Login berhasil sebagai pengguna VIP.${RESET}"
-        sleep 1
-        clear
-        show_vip_options
-    else
-        clear
-        echo -e "${RED}❌ Kode salah! Akses ditolak.${RESET}"
+        echo -e "${RED}Anda telah mencapai batas maksimum percobaan login. Akses ditolak.${RESET}"
         exit 1
     fi
 }
