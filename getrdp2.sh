@@ -99,6 +99,7 @@ function show_vip_options() {
     echo -e "${GREEN}  3. Windows 10 Pro           ${CYAN}- Windows 10 Spectre Profesional${RESET}"
     echo -e "${GREEN}  4. Windows 10 LTSC          ${CYAN}- Untuk Penggunaan minimalis${RESET}"
     echo -e "${GREEN}  5. Windows 11 Pro Micro     ${CYAN}- Windows 11 PRO Micro 24H2 XLite${RESET}"
+    echo -e "${GREEN}  6. Windows 10 Pro           ${CYAN}- Windows 10 PRO Atlas OS${RESET}"
     echo -e "${CYAN}------------------------------------------${RESET}"
     echo -e "${YELLOW}Pilih opsi di atas untuk melanjutkan.${RESET}"
     echo -e "${CYAN}------------------------------------------${RESET}"
@@ -111,7 +112,7 @@ function show_vip_options() {
         3) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=WINDOWS10GHOSTSPECTRE$files" ;;
         4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW10ltsc$files" ;;
         5) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=11micro24h2$files" ;;
-        6) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=11micro24h2$files" ;;
+        6) USER="User"; IFACE="Ethernet Instance 0 2"; GETOS="$location=win10atlasOS$files" ;;
         *) 
             echo -e ""
             echo -e "${RED}❌ Pilihan tidak valid! Silakan coba lagi.${RESET}"
