@@ -213,14 +213,12 @@ if [ "$pilihan" == "y" ]; then
     [[ -z "$PORT" ]] && PORT=$((RANDOM % 10000 + 1))
     cat >/tmp/dpart.bat<<EOF
 @ECHO OFF
-cd . > %windir%\GetAdmin
-if exist %windir%\GetAdmin (
-    del /f /q "%windir%\GetAdmin"
-) else (
-    echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas", 1 >> "%temp%\Admin.vbs"
-    "%temp%\Admin.vbs"
-    del /f /q "%temp%\Admin.vbs"
-    exit /b 2
+cd.>%windir%\GetAdmin
+if exist %windir%\GetAdmin (del /f /q "%windir%\GetAdmin") else (
+echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas", 1 >> "%temp%\Admin.vbs"
+"%temp%\Admin.vbs"
+del /f /q "%temp%\Admin.vbs"
+exit /b 2)
 )
 
 :: Mulai bagian diskpart untuk memperluas volume C:
@@ -272,14 +270,12 @@ elif [ "$pilihan" == "n" ]; then
      PORT=NO_PORT!
      cat >/tmp/dpart.bat<<EOF
 @ECHO OFF
-cd . > %windir%\GetAdmin
-if exist %windir%\GetAdmin (
-    del /f /q "%windir%\GetAdmin"
-) else (
-    echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas", 1 >> "%temp%\Admin.vbs"
-    "%temp%\Admin.vbs"
-    del /f /q "%temp%\Admin.vbs"
-    exit /b 2
+cd.>%windir%\GetAdmin
+if exist %windir%\GetAdmin (del /f /q "%windir%\GetAdmin") else (
+echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas", 1 >> "%temp%\Admin.vbs"
+"%temp%\Admin.vbs"
+del /f /q "%temp%\Admin.vbs"
+exit /b 2)
 )
 
 :: Mulai bagian diskpart untuk memperluas volume C:
