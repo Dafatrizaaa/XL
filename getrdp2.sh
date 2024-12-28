@@ -112,7 +112,7 @@ function show_vip_options() {
         3) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=WINDOWS10GHOSTSPECTRE$files" ;;
         4) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=NEW10ltsc$files" ;;
         5) USER="Admin"; IFACE="Ethernet Instance 0 2"; GETOS="$location=11micro24h2$files" ;;
-        6) USER="User"; IFACE="Ethernet Instance 0 2"; GETOS="$location=win10atlasOS$files" ;;
+        6) USER="User"; IFACE="Ethernet Instance 0 2"; GETOS="http://178.128.84.85/win10atlasOSNEW.gz" ;;
         *) 
             echo -e ""
             echo -e "${RED}❌ Pilihan tidak valid! Silakan coba lagi.${RESET}"
