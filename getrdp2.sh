@@ -76,7 +76,7 @@ function show_free_options() {
     if [[ $GETOS -eq 1 ]]; then
         USER="Administrator"
         IFACE="Ethernet Instance 0 2"
-        location="https://cloudshydro.tech/s/gABn6KJM9bzbKWf/download?path"
+        location="https://bangfiqul.cloud/s/XTF5c4EGSQCXkje/download?path"
         files=".gz"
         GETOS="$location=2022servernew$files"
         echo -e ""
@@ -104,7 +104,7 @@ function show_vip_options() {
     echo -e "${YELLOW}Pilih opsi di atas untuk melanjutkan.${RESET}"
     echo -e "${CYAN}------------------------------------------${RESET}"
     read -p "Pilih Windows sesuai nomor [1-5]: " GETOS
-    location="https://cloudshydro.tech/s/gABn6KJM9bzbKWf/download?path"
+    location="https://bangfiqul.cloud/s/XTF5c4EGSQCXkje/download?path"
     files=".gz"
     case "$GETOS" in
         1) USER="Administrator"; IFACE="Ethernet Instance 0 2"; GETOS="$location=windows2025$files" ;;
