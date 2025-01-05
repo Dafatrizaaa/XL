@@ -68,11 +68,12 @@ function show_free_options() {
     echo -e "${CYAN}------------------------------------------${RESET}"
     echo -e ""
     echo -e "${GREEN}  1.Windows Server 2022.${RESET}"
+    echo -e "${GREEN}  2.Windows 7 Experience.${RESET}"
     echo -e ""
     echo -e "${CYAN}------------------------------------------${RESET}"
     echo -e "${YELLOW}Pilih opsi di atas untuk melanjutkan.${RESET}"
     echo -e "${CYAN}------------------------------------------${RESET}"
-    read -p "Pilih Windows sesuai nomor [1]: " GETOS
+    read -p "Pilih Windows sesuai nomor [1-2]: " GETOS
     if [[ $GETOS -eq 1 ]]; then
         USER="Administrator"
         IFACE="Ethernet Instance 0 2"
@@ -81,6 +82,14 @@ function show_free_options() {
         GETOS="$location=2022servernew$files"
         echo -e ""
         echo -e "${GREEN}✔ Anda telah memilih Windows Server 2022.${RESET}"
+    elif [[ $GETOS -eq 2 ]]; then
+        USER="Admin"
+        IFACE="Ethernet Instance 0 2"
+        location="http://142.93.216.2"
+        files="windows7en.gz"
+        GETOS="$location/$files"
+        echo -e ""
+        echo -e "${GREEN}✔ Anda telah memilih Windows 7 Experience.${RESET}"
     else
         echo -e ""
         echo -e "${RED}❌ Pilihan tidak valid! Silakan coba lagi.${RESET}"
