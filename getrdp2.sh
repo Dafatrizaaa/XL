@@ -84,7 +84,7 @@ function show_free_options() {
         echo -e "${GREEN}✔ Anda telah memilih Windows Server 2022.${RESET}"
     elif [[ $GETOS -eq 2 ]]; then
         USER="Admin"
-        IFACE="Ethernet Instance 0 2"
+        IFACE="Local Area Connection 2"
         location="http://142.93.216.2"
         files="windows7en.gz"
         GETOS="$location/$files"
@@ -166,7 +166,7 @@ set OldUser=$USER
 
 net user %OldUser% /delete
 
-netsh interface ip set address "$IFACE" source=static address=$IP4 mask=$NETMASK gateway=$GW
+netsh interface ip set address "$IFACE" static $IP4 $NETMASK $GW
 netsh int ipv4 set dns name="$IFACE" static $DNSONE primary validate=no
 netsh int ipv4 add dns name="$IFACE" $DNSTWO index=2
 
@@ -190,7 +190,7 @@ del /f /q "%temp%\Admin.vbs"
 exit /b 2)
 net user $USER $password
 
-netsh interface ip set address "$IFACE" source=static address=$IP4 mask=$NETMASK gateway=$GW
+netsh interface ip set address "$IFACE" static $IP4 $NETMASK $GW
 netsh int ipv4 set dns name="$IFACE" static $DNSONE primary validate=no
 netsh int ipv4 add dns name="$IFACE" $DNSTWO index=2
 
