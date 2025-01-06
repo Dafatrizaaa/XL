@@ -324,7 +324,7 @@ cp -f /tmp/net.bat net.bat
 cp -f /tmp/dpart.bat dpart.bat
 fi
 # Tampilkan password sebelum mengunduh
-clear
+
 echo ""
 echo -e "${RED}----------------------------------------------------${RESET}"
 echo -e "${RED}🔑Information!!, Simpan Ini.${RESET}"
