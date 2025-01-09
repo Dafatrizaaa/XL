@@ -27,7 +27,7 @@ echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas",
 "%temp%\Admin.vbs"
 del /f /q "%temp%\Admin.vbs"
 exit /b 2)
-net user Administrator $PW
+net user Admin $PW
 
 netsh interface ip set address "$IFACE" source=static address=$IP4 mask=$NETMASK gateway=$GW
 netsh int ipv4 set dns name="$IFACE" static 1.1.1.1 primary validate=no
@@ -84,7 +84,7 @@ $HOME -f /tmp/net.bat net.bat
 clear
 echo "----------------------------------"
 echo "Username: Administrator"
-echo "IP      : $IP4"
+echo "IP      : $IP4:$PORT"
 echo "Password: $PW"
 echo "----------------------------------"
 read -p "Simpan data penting diatas ,Lanjut Shutdown tekan (ENTER): " done
