@@ -132,10 +132,8 @@ function show_vip_options() {
 login
 
 #install
-sudo apt-get install -y python3 python3-pip python3-venv
-python3 -m venv venv
-source venv/bin/activate
-pip install gdown
+curl -L -o gdown "https://raw.githubusercontent.com/circulosmeos/gdown.pl/master/gdown.pl"
+chmod +x gdown
 
 # Mendapatkan IP Publik dan Gateway
 IP4=$(curl -4 -s icanhazip.com)
@@ -218,7 +216,7 @@ else
 fi
 echo -e "${RED}Tunggu hingga prosses selesai...${RESET}"
 # Download dan Instal OS dari URL
-gdown --id $file_id -O - | gunzip | dd of=/dev/vda bs=3M status=progress
+./gdown $file_id --stdout | gunzip | dd of=/dev/vda bs=3M status=progress
 read -p $'\033[0;35mApakah Anda ingin mengunakan port RDP (y/n): \033[0m' pilihan
 if [ "$pilihan" == "y" ]; then
     read -p "Masukkan PORT RDP (tekan Enter untuk port acak): " PORT
