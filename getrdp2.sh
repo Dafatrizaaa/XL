@@ -85,7 +85,7 @@ function show_free_options() {
     elif [[ $GETOS -eq 2 ]]; then
         USER="Adminclient"
         IFACE="Ethernet Instance 0 2"
-        file_id="1iaOaUxCiQjFeyhYqeJWXFWnTSc9LUcbU"
+        file_id="1wuTvLOwM4-Zdtpw-dxE3XiKkilKBmBjZ"
         echo -e ""
         echo -e "${GREEN}✔ Anda telah memilih Windows 7 Experience.${RESET}"
     else
