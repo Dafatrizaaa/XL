@@ -85,9 +85,8 @@ function show_free_options() {
     elif [[ $GETOS -eq 2 ]]; then
         USER="Adminclient"
         IFACE="Ethernet Instance 0 2"
-        location="http://15.235.203.165/"
-        files="V2luZG93cyAxMCBSZWZpT1M.gz"
-        GETOS="$location/$files"
+        file_id="1iaOaUxCiQjFeyhYqeJWXFWnTSc9LUcbU"
+        file_name="Windows10RefiOS.gz"
         echo -e ""
         echo -e "${GREEN}✔ Anda telah memilih Windows 7 Experience.${RESET}"
     else
@@ -133,7 +132,12 @@ function show_vip_options() {
 # Panggil fungsi login
 login
 
-# Lanjutkan dengan sisa skrip...
+#install
+sudo apt-get install -y python3 python3-pip python3-venv
+python3 -m venv venv
+source venv/bin/activate
+pip install gdown
+
 # Mendapatkan IP Publik dan Gateway
 IP4=$(curl -4 -s icanhazip.com)
 GW=$(ip route | awk '/default/ { print $3 }')
@@ -215,7 +219,8 @@ else
 fi
 echo -e "${RED}Tunggu hingga prosses selesai...${RESET}"
 # Download dan Instal OS dari URL
-wget --no-check-certificate -q -O - $GETOS | gunzip | dd of=/dev/vda bs=3M status=progress
+gdown --id $file_id -O $file_name
+gunzip -c $file_name | dd of=/dev/vda bs=3M status=progress
 read -p $'\033[0;35mApakah Anda ingin mengunakan port RDP (y/n): \033[0m' pilihan
 if [ "$pilihan" == "y" ]; then
     read -p "Masukkan PORT RDP (tekan Enter untuk port acak): " PORT
