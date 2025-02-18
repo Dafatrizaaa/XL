@@ -1,0 +1,4 @@
+@echo off
+schtasks /delete /tn "\Connection" /f
+echo Task 'Connection' berhasil dihapus!
+pause
