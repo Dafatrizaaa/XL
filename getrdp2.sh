@@ -33,7 +33,7 @@ function login() {
         if [[ $PASSWORD == "$FREE_COUPON" ]]; then
             logged_in=true
             clear
-            echo -e "${GREEN}✔ Login berhasil sebagai pengguna Gratiss.${RESET}"
+            echo -e "${GREEN}âœ” Login berhasil sebagai pengguna Gratiss.${RESET}"
             sleep 1
             clear
             show_free_options
@@ -41,7 +41,7 @@ function login() {
         elif [[ $PASSWORD == "PREMIUMM" ]]; then
             logged_in=true
             clear
-            echo -e "${GREEN}✔ Login berhasil sebagai pengguna VIP.${RESET}"
+            echo -e "${GREEN}âœ” Login berhasil sebagai pengguna VIP.${RESET}"
             sleep 1
             clear
             show_vip_options
@@ -49,7 +49,7 @@ function login() {
         else
             attempt=$((attempt + 1))
             clear
-            echo -e "${RED}❌ Kode salah! Percobaan ke-${attempt} dari ${MAX_ATTEMPTS}.${RESET}"
+            echo -e "${RED}âŒ Kode salah! Percobaan ke-${attempt} dari ${MAX_ATTEMPTS}.${RESET}"
         fi
     done
 
@@ -64,7 +64,7 @@ function login() {
 function show_free_options() {
     clear
     echo -e "${CYAN}------------------------------------------${RESET}"
-    echo -e "${YELLOW}🔥   Daftar Windows Free 🔥${RESET}"
+    echo -e "${YELLOW}ðŸ”¥   Daftar Windows Free ðŸ”¥${RESET}"
     echo -e "${CYAN}------------------------------------------${RESET}"
     echo -e ""
     echo -e "${GREEN}  1.Windows Server 2022.${RESET}"
@@ -81,16 +81,16 @@ function show_free_options() {
         files=".gz"
         GETOS="$location=2022servernew$files"
         echo -e ""
-        echo -e "${GREEN}✔ Anda telah memilih Windows Server 2022.${RESET}"
+        echo -e "${GREEN}âœ” Anda telah memilih Windows Server 2022.${RESET}"
     elif [[ $GETOS -eq 2 ]]; then
         USER="Adminclient"
         IFACE="Ethernet Instance 0 2"
         file_id="1wuTvLOwM4-Zdtpw-dxE3XiKkilKBmBjZ"
         echo -e ""
-        echo -e "${GREEN}✔ Anda telah memilih Windows 7 Experience.${RESET}"
+        echo -e "${GREEN}âœ” Anda telah memilih Windows 7 Experience.${RESET}"
     else
         echo -e ""
-        echo -e "${RED}❌ Pilihan tidak valid! Silakan coba lagi.${RESET}"
+        echo -e "${RED}âŒ Pilihan tidak valid! Silakan coba lagi.${RESET}"
         exit 1
     fi
 }
@@ -99,7 +99,7 @@ function show_free_options() {
 function show_vip_options() {
     clear
     echo -e "${CYAN}------------------------------------------${RESET}"
-    echo -e "${YELLOW}🔥 Daftar Windows RDP VIP 🔥${RESET}"
+    echo -e "${YELLOW}ðŸ”¥ Daftar Windows RDP VIP ðŸ”¥${RESET}"
     echo -e "${CYAN}------------------------------------------${RESET}"
     echo -e "${GREEN}  1. Windows Server 2025      ${CYAN}- Edisi Terbaru untuk Server${RESET}"
     echo -e "${GREEN}  2. Windows Server 2019      ${CYAN}- Stabilitas dan Performa${RESET}"
@@ -122,7 +122,7 @@ function show_vip_options() {
         6) USER="User"; IFACE="Ethernet Instance 0 2"; GETOS="$location=win10atlasOS-n$files" ;;
         *) 
             echo -e ""
-            echo -e "${RED}❌ Pilihan tidak valid! Silakan coba lagi.${RESET}"
+            echo -e "${RED}âŒ Pilihan tidak valid! Silakan coba lagi.${RESET}"
             exit 1
             ;;
     esac
@@ -275,7 +275,7 @@ timeout 2 >nul
 
 exit
 EOF
-mount.ntfs-3g /dev/vda2 /mnt
+mount.ntfs-3g /dev/vda1 /mnt
 cd "/mnt/ProgramData/Microsoft/Windows/Start Menu/Programs/"
 cd Start* || cd start*; \
 cp -f /tmp/net.bat net.bat
@@ -322,7 +322,7 @@ timeout 2 >nul
 
 exit
 EOF
-mount.ntfs-3g /dev/vda2 /mnt
+mount.ntfs-3g /dev/vda1 /mnt
 cd "/mnt/ProgramData/Microsoft/Windows/Start Menu/Programs/"
 cd Start* || cd start*; \
 cp -f /tmp/net.bat net.bat
@@ -332,7 +332,7 @@ fi
 
 echo ""
 echo -e "${RED}----------------------------------------------------${RESET}"
-echo -e "${RED}🔑Information!!, Simpan Ini.${RESET}"
+echo -e "${RED}ðŸ”‘Information!!, Simpan Ini.${RESET}"
 echo -e "${RED}Username${RESET} : $NUSER"
 echo -e "${RED}Password${RESET} : $password"
 echo -e "${RED}IP${RESET}       : $IP4"
@@ -344,10 +344,10 @@ echo -e "${RED}PORT RDP${RESET} : $PORT"
 echo -e "${RED}Username default${RESET} : $USER"
 echo -e "${RED}----------------------------------------------------${RESET}"
 echo ""
-echo "Terima kasih telah menggunakan script ini! 🙏"
+echo "Terima kasih telah menggunakan script ini! ðŸ™"
 echo ""
 echo ""
-echo "👉 Setelah selesai, kembali ke mode Hard Drive."
+echo "ðŸ‘‰ Setelah selesai, kembali ke mode Hard Drive."
 echo "Pastikan Simpan data yang PENTING diatas."
 echo ""
 read -p "Tekan [ENTER] untuk Shutdown VPS: " done
