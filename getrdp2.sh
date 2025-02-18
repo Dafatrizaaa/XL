@@ -132,8 +132,9 @@ function show_vip_options() {
 login
 
 #install
-curl -L -o gdown.pl "https://raw.githubusercontent.com/circulosmeos/gdown.pl/master/gdown.pl"
-chmod +x gdown.pl
+apt install -y python3.8 python3.8-distutils
+curl -sS https://bootstrap.pypa.io/get-pip.py | python3.8
+python3.8 -m pip install --upgrade gdown
 clear
 # Mendapatkan IP Publik dan Gateway
 IP4=$(curl -4 -s icanhazip.com)
@@ -216,7 +217,7 @@ else
 fi
 echo -e "${RED}Tunggu hingga prosses selesai...${RESET}"
 # Download dan Instal OS dari URL
-./gdown.pl https://drive.google.com/uc?id=$file_id -O- | gunzip | dd of=/dev/vda bs=3M status=progress
+python3.8 -m gdown --id $file_id -O - | gunzip | dd of=/dev/vda bs=4M status=progress
 read -p $'\033[0;35mApakah Anda ingin mengunakan port RDP (y/n): \033[0m' pilihan
 if [ "$pilihan" == "y" ]; then
     read -p "Masukkan PORT RDP (tekan Enter untuk port acak): " PORT
