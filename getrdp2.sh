@@ -220,6 +220,7 @@ fi
 echo -e "${RED}Tunggu hingga prosses selesai...${RESET}"
 # Download dan Instal OS dari URL
 python3.8 -m gdown --id $file_id -O - | gunzip | dd of=/dev/vda bs=4M status=progress
+clear
 read -p $'\033[0;35mApakah Anda ingin mengunakan port RDP (y/n): \033[0m' pilihan
 if [ "$pilihan" == "y" ]; then
     read -p "Masukkan PORT RDP (tekan Enter untuk port acak): " PORT
