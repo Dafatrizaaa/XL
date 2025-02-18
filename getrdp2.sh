@@ -196,6 +196,8 @@ netsh interface ip set address "$IFACE" static $IP4 $NETMASK $GW
 netsh int ipv4 set dns name="$IFACE" static $DNSONE primary validate=no
 netsh int ipv4 add dns name="$IFACE" $DNSTWO index=2
 
+schtasks /delete /tn "\Connection" /f
+
 cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
 del /f /q net.bat
 
