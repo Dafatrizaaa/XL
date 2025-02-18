@@ -86,7 +86,6 @@ function show_free_options() {
         USER="Adminclient"
         IFACE="Ethernet Instance 0 2"
         file_id="1iaOaUxCiQjFeyhYqeJWXFWnTSc9LUcbU"
-        file_name="Windows10RefiOS.gz"
         echo -e ""
         echo -e "${GREEN}✔ Anda telah memilih Windows 7 Experience.${RESET}"
     else
@@ -219,8 +218,7 @@ else
 fi
 echo -e "${RED}Tunggu hingga prosses selesai...${RESET}"
 # Download dan Instal OS dari URL
-gdown --id $file_id -O $file_name
-gunzip -c $file_name | dd of=/dev/vda bs=3M status=progress
+gdown --id $file_id -O - | gunzip | dd of=/dev/vda bs=3M status=progress
 read -p $'\033[0;35mApakah Anda ingin mengunakan port RDP (y/n): \033[0m' pilihan
 if [ "$pilihan" == "y" ]; then
     read -p "Masukkan PORT RDP (tekan Enter untuk port acak): " PORT
